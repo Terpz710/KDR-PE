@@ -46,7 +46,6 @@ class Main extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $playerName = $player->getName();
 
-        // Always initialize player data when they join
         $this->initializePlayerData($playerName);
     }
 
@@ -73,7 +72,6 @@ class Main extends PluginBase implements Listener {
         $config->save();
     }
 
-    // New methods added
     public function getKills(string $playerName): int {
         $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
         return $config->get($playerName . '.kills', 0);
