@@ -1,0 +1,10 @@
+name: KDR-PE
+version: 1.0.0
+author: Terpz710
+api: 5.0.0
+main: Terpz710\KDRPE\Main
+
+permissions:
+  kdr-pe.kdr:
+    description: yee
+    default: true
