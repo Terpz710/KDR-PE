@@ -88,4 +88,10 @@ class Main extends PluginBase implements Listener {
         $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
         return $config->get($playerName . '.deaths', 0);
     }
+
+    public function getTopKills(): array {
+        $playerData = $this->getPlayerData();
+        arsort($playerData);
+        return array_slice($playerData, 0, 5);
+    }
 }
