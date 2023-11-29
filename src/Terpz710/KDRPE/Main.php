@@ -13,11 +13,13 @@ use pocketmine\player\Player;
 use pocketmine\utils\Config;
 
 use Terpz710\KDRPE\Command\KDRCommand;
+use Terpz710\KDRPE\Command\TopKillCommand;
 
 class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->getServer()->getCommandMap()->register('kdr', new KDRCommand($this));
+        $this->getServer()->getCommandMap()->register('topkill', new TopKillCommand($this));
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
         if (!file_exists($this->getDataFolder() . 'data.yml')) {
@@ -70,6 +72,11 @@ class Main extends PluginBase implements Listener {
         $deaths = $config->get($playerName . '.deaths', 0);
         $config->set($playerName . '.deaths', ++$deaths);
         $config->save();
+    }
+
+    public function getPlayerData(): array {
+        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
+        return $config->getAll();
     }
 
     public function getKills(string $playerName): int {
