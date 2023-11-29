@@ -6,7 +6,6 @@ namespace Terpz710\KDRPE\Command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\player\Player;
 
 use Terpz710\KDRPE\Main;
 
@@ -25,6 +24,7 @@ class TopKillCommand extends Command {
 
         if (!empty($topKills)) {
             $sender->sendMessage("Top Kills:");
+            $sender->sendMessage(str_repeat("—", 16));
 
             foreach ($topKills as $playerName => $kills) {
                 $sender->sendMessage("{$playerName}: {$kills}");
