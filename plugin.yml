@@ -8,3 +8,6 @@ permissions:
   kdr-pe.kdr:
     description: yee
     default: true
+  kdr-pe.topkill:
+    description: yee
+    default: true
