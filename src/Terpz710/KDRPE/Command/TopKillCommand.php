@@ -33,8 +33,19 @@ class TopKillCommand extends Command {
         }
 
         $sender->sendMessage('Top Kills:');
+        $count = 0;
         foreach ($topKillList as $position => $data) {
-            $sender->sendMessage("[{$position}] {$data['player']} - Kills: {$data['kills']}");
+            if (is_array($data)) {
+                $sender->sendMessage("[{$position}] {$data['player']} - Kills: {$data['kills']}");
+            } else {
+                // NOOP
+            }
+
+            $count++;
+
+            if ($count >= 10) {
+                break;
+            }
         }
     }
 
