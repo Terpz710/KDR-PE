@@ -16,7 +16,7 @@ class TopKillCommand extends Command {
 
     public function __construct($plugin) {
         parent::__construct('topkill', 'Display top kills', '/topkill');
-        $this->setPermission('kdr.topkill');
+        $this->setPermission('kdr-pe.topkill');
         $this->plugin = $plugin;
     }
 
