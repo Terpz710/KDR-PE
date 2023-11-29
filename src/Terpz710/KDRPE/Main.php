@@ -91,7 +91,14 @@ class Main extends PluginBase implements Listener {
 
     public function getTopKills(): array {
         $playerData = $this->getPlayerData();
-        arsort($playerData);
-        return array_slice($playerData, 0, 5);
+        $topKills = [];
+
+        foreach ($playerData as $playerName => $data) {
+            $kills = $data['kills'] ?? 0;
+            $topKills[$playerName] = $kills;
+        }
+
+        arsort($topKills);
+        return array_slice($topKills, 0, 5);
     }
 }
