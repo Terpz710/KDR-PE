@@ -55,7 +55,7 @@ class TopKillCommand extends Command {
 
         $count = 0;
         foreach ($playerData as $playerName) {
-            $topKillList[++$count] = $playerName;
+            $topKillList[$count] = $playerName;
             if ($count >= 10) {
                 break;
             }
