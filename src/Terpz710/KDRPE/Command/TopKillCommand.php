@@ -34,15 +34,11 @@ class TopKillCommand extends Command {
 
         $sender->sendMessage('Top Kills:');
         $count = 0;
-        foreach ($topKillList as $position => $data) {
-            if (is_array($data)) {
-                $sender->sendMessage("[{$position}] {$data['player']} - Kills: {$data['kills']}");
-            } else {
-                // NOOP
-            }
+        foreach ($topKillList as $position => $playerName) {
+            $kills = $this->plugin->getKills($playerName);
+            $sender->sendMessage("[{$position}] {$playerName} - Kills: {$kills}");
 
             $count++;
-
             if ($count >= 10) {
                 break;
             }
@@ -54,12 +50,12 @@ class TopKillCommand extends Command {
         $playerData = $this->plugin->getPlayerData();
 
         uasort($playerData, function ($a, $b) {
-            return $b['kills'] <=> $a['kills'];
+            return $this->plugin->getKills($b) <=> $this->plugin->getKills($a);
         });
 
         $count = 0;
-        foreach ($playerData as $playerName => $data) {
-            $topKillList[++$count] = ['player' => $playerName, 'kills' => $data['kills']];
+        foreach ($playerData as $playerName) {
+            $topKillList[++$count] = $playerName;
             if ($count >= 10) {
                 break;
             }
