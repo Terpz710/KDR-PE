@@ -28,7 +28,7 @@ class TopKillCommand extends Command {
             $rank = 1;
             foreach ($topKills as $playerName => $kills) {
                 $formattedName = ucwords(strtolower($playerName));
-                $sender->sendMessage("§e{$rank}. §b{$formattedName}§f: §e{$kills}");
+                $sender->sendMessage("§e{$rank}. §f{$formattedName}§f: §e{$kills}");
                 $rank++;
                 if ($rank > 10) {
                     break;
