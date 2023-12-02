@@ -27,7 +27,7 @@ class TopKillCommand extends Command {
 
             foreach ($topKills as $playerName => $kills) {
                 $formattedName = ucwords(strtolower($playerName));
-                $sender->sendMessage("{$formattedName}: Kills: {$kills}");
+                $sender->sendMessage("{$formattedName}: {$kills}");
             }
         } else {
             $sender->sendMessage("No top kills yet.");
