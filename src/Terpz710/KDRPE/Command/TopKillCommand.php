@@ -25,8 +25,10 @@ class TopKillCommand extends Command {
         if (!empty($topKills)) {
             $sender->sendMessage("----§eTop Kills§f----");
 
+            $rank = 1;
             foreach ($topKills as $playerName => $kills) {
-                $sender->sendMessage("{$playerName}: {$kills}");
+                $sender->sendMessage("{$rank}. {$playerName} - {$kills} Kills");
+                $rank++;
             }
         } else {
             $sender->sendMessage("No top kills yet.");
