@@ -22,8 +22,8 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getCommandMap()->register('topkill', new TopKillCommand($this));
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
-        if (!file_exists($this->getDataFolder() . 'data.yml')) {
-            $this->saveResource('data.yml');
+        if (!file_exists($this->getDataFolder() . 'data.json')) {
+            $this->saveResource('data.json');
         }
     }
 
@@ -52,41 +52,48 @@ class Main extends PluginBase implements Listener {
     }
 
     private function initializePlayerData(string $playerName): void {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        if (!$config->exists($playerName . '.kills') || !$config->exists($playerName . '.deaths')) {
-            $config->set($playerName . '.kills', 0);
-            $config->set($playerName . '.deaths', 0);
-            $config->save();
+        $dataPath = $this->getDataFolder() . 'data.json';
+        $playerData = json_decode(file_get_contents($dataPath), true);
+
+        if (!isset($playerData[$playerName])) {
+            $playerData[$playerName] = ['kills' => 0, 'deaths' => 0];
+            file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
         }
     }
 
     private function incrementKill(string $playerName): void {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        $kills = $config->get($playerName . '.kills', 0);
-        $config->set($playerName . '.kills', ++$kills);
-        $config->save();
+        $dataPath = $this->getDataFolder() . 'data.json';
+        $playerData = json_decode(file_get_contents($dataPath), true);
+
+        $playerData[$playerName]['kills']++;
+        file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
     }
 
     private function incrementDeath(string $playerName): void {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        $deaths = $config->get($playerName . '.deaths', 0);
-        $config->set($playerName . '.deaths', ++$deaths);
-        $config->save();
+        $dataPath = $this->getDataFolder() . 'data.json';
+        $playerData = json_decode(file_get_contents($dataPath), true);
+
+        $playerData[$playerName]['deaths']++;
+        file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
     }
 
     public function getPlayerData(): array {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        return $config->getAll();
+        $dataPath = $this->getDataFolder() . 'data.json';
+        $playerData = json_decode(file_get_contents($dataPath), true);
+
+        return $playerData ?? [];
     }
 
     public function getKills(string $playerName): int {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        return $config->get($playerName . '.kills', 0);
+        $playerData = $this->getPlayerData();
+
+        return $playerData[$playerName]['kills'] ?? 0;
     }
 
     public function getDeaths(string $playerName): int {
-        $config = new Config($this->getDataFolder() . 'data.yml', Config::YAML);
-        return $config->get($playerName . '.deaths', 0);
+        $playerData = $this->getPlayerData();
+
+        return $playerData[$playerName]['deaths'] ?? 0;
     }
 
     public function getTopKills(): array {
@@ -99,6 +106,7 @@ class Main extends PluginBase implements Listener {
         }
 
         arsort($topKills);
+
         return array_slice($topKills, 0, 5);
     }
 }
