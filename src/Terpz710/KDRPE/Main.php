@@ -22,8 +22,10 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getCommandMap()->register('topkill', new TopKillCommand($this));
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
-        if (!file_exists($this->getDataFolder() . 'data.json')) {
-            $this->saveResource('data.json');
+        $dataPath = $this->getDataFolder() . 'data.json';
+        if (!file_exists($dataPath)) {
+            $initialData = [];
+            file_put_contents($dataPath, json_encode($initialData, JSON_PRETTY_PRINT));
         }
     }
 
@@ -53,6 +55,7 @@ class Main extends PluginBase implements Listener {
 
     private function initializePlayerData(string $playerName): void {
         $dataPath = $this->getDataFolder() . 'data.json';
+
         $playerData = json_decode(file_get_contents($dataPath), true);
 
         if (!isset($playerData[$playerName])) {
