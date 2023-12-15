@@ -50,7 +50,7 @@ class TopKillFTCommand extends Command {
         return true;
     }
 
-    private function showFloatingText(Player $player): void {
+    private function showFloatingText(Player $player) {
         $topKillData = $this->plugin->getTopKills();
 
         $text = "-----------§eTOP KILLS§f-----------\n";
