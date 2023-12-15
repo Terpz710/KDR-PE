@@ -69,15 +69,15 @@ class TopKillFTCommand extends Command {
         $tag = 'topkill';
         FloatingKDRAPI::create($position, $tag, $text, $this->plugin->getDataFolder());
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
-        $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
+        $player->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
         return true;
     }
 
-    private function removeFloatingText(Player $player): {
+    private function removeFloatingText(Player $player) {
         $tag = 'topkill';
         FloatingKDRAPI::remove($tag, $this->plugin->getDataFolder() . 'FT');
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
-        $sender->sendMessage('§l(§c!§f)§r§f Top Kill leaderboard Floating Text has been turned off!');
+        $player->sendMessage('§l(§c!§f)§r§f Top Kill leaderboard Floating Text has been turned off!');
         return true;
     }
 } 
