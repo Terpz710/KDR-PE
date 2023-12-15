@@ -31,11 +31,30 @@ class TopKillFTCommand extends Command {
         if (!$this->testPermission($sender)) {
             return true;
         }
+        if (isset($args[0])) {
+            $subCommand = strtolower($args[0]);
+            if ($subCommand === 'on') {
+                $this->showFloatingText($sender);
+                $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
+            } elseif ($subCommand === 'off') {
+                $this->removeFloatingText($sender);
+                $sender->sendMessage('§l(§c!§r§f) Top Kill leaderboard Floating Text removed!');
+            } else {
+                $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
+            }
 
+            return true;
+        }
+        $this->showFloatingText($sender);
+
+        return true;
+    }
+
+    private function showFloatingText(Player $player): void {
         $topKillData = $this->plugin->getTopKills();
 
         $text = "-----------§eTOP KILLS§f-----------\n";
-        $position = $sender->getPosition();
+        $position = $player->getPosition();
 
         $rank = 1;
         foreach ($topKillData as $playerName => $kills) {
@@ -46,10 +65,15 @@ class TopKillFTCommand extends Command {
                 break;
             }
         }
+
         $tag = 'topkill';
         FloatingKDRAPI::create($position, $tag, $text, $this->plugin->getDataFolder());
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
-        $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
-        return true;
+    }
+
+    private function removeFloatingText(Player $player): void {
+        $tag = 'topkill';
+        FloatingKDRAPI::remove($tag, $this->plugin->getDataFolder() . 'FT')
+        FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
     }
 }
