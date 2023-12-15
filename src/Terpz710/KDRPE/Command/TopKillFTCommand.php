@@ -15,6 +15,8 @@ use Terpz710\KDRPE\Main;
 
 class TopKillFTCommand extends Command implements PluginOwned {
 
+    private $plugin;
+
     public function __construct(Main $plugin) {
         parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext');
         $this->setPermission('kdrpe.command.topkillft');
