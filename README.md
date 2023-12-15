@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/Terpz710/KDR-PE"><img src="https://github.com/Terpz710/KDR-PE/blob/main/icon.png"></img></a><br>
-    <b>KDR-PE for [Pocketmine-MP](https://pmmp.io)</b>
+    <b>KDR-PE for Pocketmine-MP</b>
 
 # Description
 
