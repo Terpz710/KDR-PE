@@ -12,10 +12,10 @@ use pocketmine\plugin\Plugin;
 use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Terpz710\KDRPE\Main;
 
-/** @var Plugin */
-private $plugin;
-
 class TopKillFTCommand extends Command {
+
+    /** @var Plugin */
+    private $plugin;
 
     public function __construct(Main $plugin) {
         parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext');
