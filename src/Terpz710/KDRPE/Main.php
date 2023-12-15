@@ -12,7 +12,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
-use pocketmine\utils\Config;
+use pocketmine\world\WorldManager;
 
 use Terpz710\KDRPE\Command\KDRCommand;
 use Terpz710\KDRPE\Command\TopKillCommand;
@@ -74,6 +74,7 @@ class Main extends PluginBase implements Listener {
 
             if ($damager instanceof Player) {
                 $this->incrementKill($damager->getName());
+                $this->updateFloatingText();
             }
         }
 
@@ -121,6 +122,30 @@ class Main extends PluginBase implements Listener {
         file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
     }
 
+    private function updateFloatingText() {
+    $ftFolderPath = $this->getDataFolder() . 'FT';
+    $text = $this->getFloatingText();
+    FloatingKDRAPI::update('topkill', $text, $ftFolderPath);
+    }
+
+    private function getFloatingText(): string {
+        $topKillData = $this->getTopKills();
+
+        $text = "-----------§eTOP KILLS§f-----------\n";
+
+        $rank = 1;
+        foreach ($topKillData as $playerName => $kills) {
+            $text .= "§e{$rank}. §f{$playerName}: §e{$kills}\n";
+            $rank++;
+
+            if ($rank > 10) {
+                break;
+            }
+        }
+
+        return $text;
+    }
+
     public function getPlayerData(): array {
         $dataPath = $this->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
         $playerData = json_decode(file_get_contents($dataPath), true);
@@ -151,6 +176,6 @@ class Main extends PluginBase implements Listener {
 
         arsort($topKills);
 
-        return array_slice($topKills, 0, 5);
+        return array_slice($topKills, 0, 10);
     }
 }
