@@ -29,7 +29,7 @@ class KDRCommand extends Command {
             $kdr = ($deaths === 0) ? $kills : round($kills / $deaths, 2);
 
             $formattedName = ucwords(strtolower($playerName));
-            $sender->sendMessage("----§e{$formattedName}'s Stats§f----");
+            $sender->sendMessage("-----------§e{$formattedName}'s Stats§f-----------");
             $sender->sendMessage("Kills: §e{$kills}");
             $sender->sendMessage("Deaths: §e{$deaths}");
             $sender->sendMessage("KDR: §e{$kdr}");
