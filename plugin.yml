@@ -6,8 +6,11 @@ main: Terpz710\KDRPE\Main
 
 permissions:
   kdr-pe.kdr:
-    description: yee
+    description: Allows anyone to use KDR command.
     default: true
   kdr-pe.topkill:
-    description: yee
+    description: Allows anyone to use top kill command.
     default: true
+  kdr-pe.topkillft:
+    description: Allows only OP to add topkill leaderboard floating text.
+    default: op
