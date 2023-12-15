@@ -8,18 +8,21 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 
 use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Terpz710\KDRPE\Main;
 
-class TopKillFTCommand extends Command {
-
-    private $plugin;
+class TopKillFTCommand extends Command implements PluginOwned {
 
     public function __construct(Main $plugin) {
         parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext');
-        $this->setPermission('kdr-pe.topkillft');
+        $this->setPermission('kdrpe.command.topkillft');
         $this->plugin = $plugin;
+    }
+
+    public function getOwningPlugin(): Plugin {
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
@@ -32,30 +35,10 @@ class TopKillFTCommand extends Command {
             return true;
         }
 
-        if (empty($args)) {
-            $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
-            return true;
-        }
-
-        $subCommand = strtolower($args[0]);
-        if ($subCommand === 'on') {
-            $this->showFloatingText($sender);
-            $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
-        } elseif ($subCommand === 'off') {
-            $this->removeFloatingText($sender);
-            $sender->sendMessage('§l(§c!§r§f) Top Kill leaderboard Floating Text removed!');
-        } else {
-            $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
-        }
-
-        return true;
-    }
-
-    private function showFloatingText(Player $player) {
         $topKillData = $this->plugin->getTopKills();
 
-        $text = "-----------§eTOP KILLS§f-----------\n";
-        $position = $player->getPosition();
+        $text = "-----------§eTOP KILL§f-----------\n";
+        $position = $sender->getPosition();
 
         $rank = 1;
         foreach ($topKillData as $playerName => $kills) {
@@ -66,17 +49,10 @@ class TopKillFTCommand extends Command {
                 break;
             }
         }
-
         $tag = 'topkill';
         FloatingKDRAPI::create($position, $tag, $text, $this->plugin->getDataFolder());
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
-        return true;
-    }
-
-    private function removeFloatingText(Player $player) {
-        $tag = 'topkill';
-        FloatingKDRAPI::remove($tag, $this->plugin->getDataFolder() . 'FT');
-        FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
+        $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
         return true;
     }
 }
