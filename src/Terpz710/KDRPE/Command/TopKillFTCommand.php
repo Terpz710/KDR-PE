@@ -75,7 +75,7 @@ class TopKillFTCommand extends Command {
 
     private function removeFloatingText(Player $player): void {
         $tag = 'topkill';
-        FloatingKDRAPI::remove($tag, $this->plugin->getDataFolder() . 'FT')
+        FloatingKDRAPI::remove($tag, $this->plugin->getDataFolder() . 'FT');
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
         $sender->sendMessage('§l(§c!§f)§r§f Top Kill leaderboard Floating Text has been turned off!');
         return true;
