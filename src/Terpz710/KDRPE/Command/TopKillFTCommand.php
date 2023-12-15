@@ -11,6 +11,9 @@ use pocketmine\player\Player;
 use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Terpz710\KDRPE\Main;
 
+/** @var Plugin */
+private $plugin;
+
 class TopKillFTCommand extends Command {
 
     public function __construct(Main $plugin) {
