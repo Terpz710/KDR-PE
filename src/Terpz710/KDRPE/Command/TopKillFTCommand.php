@@ -31,21 +31,22 @@ class TopKillFTCommand extends Command {
         if (!$this->testPermission($sender)) {
             return true;
         }
-        if (isset($args[0])) {
-            $subCommand = strtolower($args[0]);
-            if ($subCommand === 'on') {
-                $this->showFloatingText($sender);
-                $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
-            } elseif ($subCommand === 'off') {
-                $this->removeFloatingText($sender);
-                $sender->sendMessage('§l(§c!§r§f) Top Kill leaderboard Floating Text removed!');
-            } else {
-                $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
-            }
 
+        if (empty($args)) {
+            $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
             return true;
         }
-        $this->showFloatingText($sender);
+
+        $subCommand = strtolower($args[0]);
+        if ($subCommand === 'on') {
+            $this->showFloatingText($sender);
+            $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
+        } elseif ($subCommand === 'off') {
+            $this->removeFloatingText($sender);
+            $sender->sendMessage('§l(§c!§r§f) Top Kill leaderboard Floating Text removed!');
+        } else {
+            $sender->sendMessage('Usage: /topkillfloatingtext [on|off]');
+        }
 
         return true;
     }
@@ -78,4 +79,4 @@ class TopKillFTCommand extends Command {
         FloatingKDRAPI::saveToFile($this->plugin->getDataFolder() . 'FT' . DIRECTORY_SEPARATOR . 'floating_text_data.json');
         return true;
     }
-} 
+}
