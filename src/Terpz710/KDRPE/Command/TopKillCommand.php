@@ -23,7 +23,7 @@ class TopKillCommand extends Command {
         $topKills = $this->plugin->getTopKills();
 
         if (!empty($topKills)) {
-            $sender->sendMessage("----§eTop Kills§f----");
+            $sender->sendMessage("-----------§eTop Kills§f-----------");
 
             $rank = 1;
             foreach ($topKills as $playerName => $kills) {
