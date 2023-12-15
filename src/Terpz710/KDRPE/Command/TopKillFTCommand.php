@@ -7,6 +7,7 @@ namespace Terpz710\KDRPE\Command;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\plugin\Plugin;
 
 use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Terpz710\KDRPE\Main;
