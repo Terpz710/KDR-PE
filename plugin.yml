@@ -1,16 +1,20 @@
 name: KDR-PE
-version: 1.0.0
+version: 1.0.0-alpha
 author: Terpz710
 api: 5.0.0
 main: Terpz710\KDRPE\Main
+description: A KDR system.
 
 permissions:
-  kdr-pe.kdr:
-    description: Allows anyone to use KDR command.
+  kdr-pe.command.kdr:
+    description: Allows the player to see their KDR.
     default: true
-  kdr-pe.topkill:
-    description: Allows anyone to use top kill command.
+  kdr-pe.command.seekdr:
+    description: Allows the player to see other players KDR.
     default: true
-  kdr-pe.topkillft:
-    description: Allows only OP to add topkill leaderboard floating text.
+  kdr-pe.command.topkill:
+    description: Allows the player to see the top kills.
+    default: true
+  kdrpe.command.topkillft:
+    description: Allows the OP to add/remove the top kill floating text.
     default: op
