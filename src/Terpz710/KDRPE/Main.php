@@ -20,6 +20,9 @@ use Terpz710\KDRPE\Command\SeeKDRCommand;
 use Terpz710\KDRPE\Command\TopKillCommand;
 use Terpz710\KDRPE\Command\TopKillFTCommand;
 use Terpz710\KDRPE\API\FloatingKDRAPI;
+use Ifera\ScoreHud\event\PlayerTagsUpdateEvent;
+use Ifera\ScoreHud\scoreboard\ScoreTag;
+use Ifera\ScoreHud\ScoreHud;
 
 class Main extends PluginBase implements Listener {
 
@@ -80,6 +83,7 @@ class Main extends PluginBase implements Listener {
         }
 
         $this->incrementDeath($player->getName());
+        $this->updateScoreHudTags($player);
         $this->updateFloatingText();
     }
 
@@ -89,6 +93,7 @@ class Main extends PluginBase implements Listener {
         $this->initializePlayerData($playerName);
         $ftFolderPath = $this->getDataFolder() . 'FT';
         FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json', $ftFolderPath);
+        $this->updateScoreHudTags($player);
     }
 
     public function onPlayerQuit(PlayerQuitEvent $event): void {
@@ -105,6 +110,7 @@ class Main extends PluginBase implements Listener {
         if (!isset($playerData[$playerName])) {
             $playerData[$playerName] = ['kills' => 0, 'deaths' => 0];
             file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
+            $this->updateScoreHudTags($this->getServer()->getPlayerExact($player));
         }
     }
 
@@ -180,5 +186,29 @@ class Main extends PluginBase implements Listener {
         arsort($topKills);
 
         return array_slice($topKills, 0, 10);
+    }
+
+    public function updateScoreHudTags(Player $player): void
+{
+    if (class_exists(ScoreHud::class)) {
+        $kills = $this->getKills($player->getName());
+        $deaths = $this->getDeaths($player->getName());
+
+        if ($deaths === 0) {
+            $kdr = $kills;
+        } else {
+            $kdr = $kills / $deaths;
+        }
+        $kdr = round($kdr, 3);
+        $ev = new PlayerTagsUpdateEvent(
+            $player,
+            [
+                new ScoreTag("kdrpe.kills", (string)$kills),
+                new ScoreTag("kdrpe.deaths", (string)$deaths),
+                new ScoreTag("kdrpe.kdr", (string)$kdr)
+            ]
+        );
+        $ev->call();
+        }
     }
 }
