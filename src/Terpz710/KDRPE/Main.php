@@ -69,22 +69,22 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
-        $player = $event->getPlayer();
-        $this->initializePlayerData($player->getName());
+    $player = $event->getPlayer();
+    $this->initializePlayerData($player->getName());
 
-        $cause = $player->getLastDamageCause();
+    $cause = $player->getLastDamageCause();
 
-        if ($cause instanceof EntityDamageByEntityEvent) {
-            $damager = $cause->getDamager();
+    if ($cause instanceof EntityDamageByEntityEvent) {
+    $damager = $cause->getDamager();
 
-            if ($damager instanceof Player) {
-                $this->incrementKill($damager->getName());
-            }
+    if ($damager instanceof Player) {
+        $this->incrementKill($damager->getName());
+        $this->updateScoreHudTags($damager);
         }
-
         $this->incrementDeath($player->getName());
         $this->updateScoreHudTags($player);
         $this->updateFloatingText();
+        }
     }
 
     public function onPlayerJoin(PlayerJoinEvent $event): void {
