@@ -27,10 +27,12 @@ use Ifera\ScoreHud\ScoreHud;
 class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
-        $this->getServer()->getCommandMap()->register('kdr', new KDRCommand($this));
-        $this->getServer()->getCommandMap()->register('seekdr', new SeeKDRCommand($this));
-        $this->getServer()->getCommandMap()->register('topkill', new TopKillCommand($this));
-        $this->getServer()->getCommandMap()->register('topkillfloatingtext', new TopKillFTCommand($this));
+        $this->getServer()->getCommandMap()->registerAll("KDR-PE", [
+			new KDRCommand($this),
+			new SeeKDRCommand($this),
+			new TopKillCommand($this),
+			new TopKillFTCommand($this)
+		]);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
         if (!is_dir($kdrFolderPath)) {
