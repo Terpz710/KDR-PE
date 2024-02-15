@@ -112,7 +112,7 @@ class Main extends PluginBase implements Listener {
         if (!isset($playerData[$playerName])) {
             $playerData[$playerName] = ['kills' => 0, 'deaths' => 0];
             file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
-            $this->updateScoreHudTags($this->getServer()->getPlayerExact($player));
+            $this->updateScoreHudTags($this->getServer()->getPlayerExact($playerName));
         }
     }
 
