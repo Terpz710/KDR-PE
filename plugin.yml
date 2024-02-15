@@ -4,6 +4,7 @@ author: Terpz710
 api: 5.0.0
 main: Terpz710\KDRPE\Main
 description: A KDR system.
+softdepend: ScoreHud
 
 permissions:
   kdr-pe.command.kdr:
