@@ -6,9 +6,17 @@
 
 A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system.
 
-Discord: ace873056  
+This plugin creates a floating text leaderboard that shows off the top kills on the server as well!
 
-Enjoy!:)
+# Features 
+
+* Kill tracker
+* Death tracker
+* KDR system
+* Topkill system
+* See other players KDRS
+* Scorehud support
+* CREATE A TOP KILL LEADERBOARD(Floating Text).
 
 # Permissions/Commands
 ```
