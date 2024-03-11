@@ -18,8 +18,26 @@ class FloatingKDRAPI {
             self::remove($tag, $ftFolderPath);
         }
 
-        self::$floatingText[$tag] = ['position' => $position, 'text' => $text, 'particle' => $floatingText];
-        $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
+        self::$floatingText[$tag] = ['position' => $position, 'text' => $text, 'particle' => $floatingText, 'folderPath' => $ftFolderPath];
+
+        if ($position->getWorld() !== null && $position->getWorld()->isLoaded()) {
+            self::addParticleToWorld($tag);
+        }
+    }
+
+    private static function addParticleToWorld(string $tag): void {
+        $data = self::$floatingText[$tag] ?? null;
+
+        if ($data !== null) {
+            $position = $data['position'];
+            $text = $data['text'];
+            $floatingText = $data['particle'];
+            $ftFolderPath = $data['folderPath'];
+
+            $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
+
+            unset(self::$floatingText[$tag]);
+        }
     }
 
     public static function remove(string $tag, string $ftFolderPath): void {
