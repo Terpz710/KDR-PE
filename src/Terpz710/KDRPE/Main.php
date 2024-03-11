@@ -27,12 +27,10 @@ use Ifera\ScoreHud\ScoreHud;
 class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
-        $this->getServer()->getCommandMap()->registerAll("KDR-PE", [
-			new KDRCommand($this),
-			new SeeKDRCommand($this),
-			new TopKillCommand($this),
-			new TopKillFTCommand($this)
-		]);
+        $this->getServer()->getCommandMap()->register('kdr', new KDRCommand($this));
+        $this->getServer()->getCommandMap()->register('seekdr', new SeeKDRCommand($this));
+        $this->getServer()->getCommandMap()->register('topkill', new TopKillCommand($this));
+        $this->getServer()->getCommandMap()->register('topkillfloatingtext', new TopKillFTCommand($this));
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
         if (!is_dir($kdrFolderPath)) {
@@ -71,22 +69,23 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
-    $player = $event->getPlayer();
-    $this->initializePlayerData($player->getName());
+        $player = $event->getPlayer();
+        $this->initializePlayerData($player->getName());
 
-    $cause = $player->getLastDamageCause();
+        $cause = $player->getLastDamageCause();
 
-    if ($cause instanceof EntityDamageByEntityEvent) {
-    $damager = $cause->getDamager();
+        if ($cause instanceof EntityDamageByEntityEvent) {
+            $damager = $cause->getDamager();
 
-    if ($damager instanceof Player) {
-        $this->incrementKill($damager->getName());
-        $this->updateScoreHudTags($damager);
+            if ($damager instanceof Player) {
+                $this->incrementKill($damager->getName());
+                $this->updateScoreHudTags($damager);
+            }
         }
+
         $this->incrementDeath($player->getName());
         $this->updateScoreHudTags($player);
         $this->updateFloatingText();
-        }
     }
 
     public function onPlayerJoin(PlayerJoinEvent $event): void {
@@ -112,7 +111,7 @@ class Main extends PluginBase implements Listener {
         if (!isset($playerData[$playerName])) {
             $playerData[$playerName] = ['kills' => 0, 'deaths' => 0];
             file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
-            $this->updateScoreHudTags($this->getServer()->getPlayerExact($playerName));
+            $this->updateScoreHudTags($this->getServer()->getPlayerExact($player));
         }
     }
 
