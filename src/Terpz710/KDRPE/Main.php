@@ -26,6 +26,7 @@ use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Ifera\ScoreHud\event\PlayerTagsUpdateEvent;
 use Ifera\ScoreHud\scoreboard\ScoreTag;
 use Ifera\ScoreHud\ScoreHud;
+use Ifera\ScoreHud\event\TagsResolveEvent;
 
 class Main extends PluginBase implements Listener {
 
@@ -226,5 +227,31 @@ class Main extends PluginBase implements Listener {
             );
             $ev->call();
         }
+    }
+
+    public function onTagResolve(TagsResolveEvent $event): void {
+        $player = $event->getPlayer();
+        $tag = $event->getTag();
+        $kills = $this->getKills($player->getName());
+        $deaths = $this->getDeaths($player->getName());
+
+            if ($deaths === 0) {
+                $kdr = $kills;
+            } else {
+                $kdr = $kills / $deaths;
+            }
+            $kdr = round($kdr, 3);
+
+        if ($player === null) {
+            return;
+        }
+
+        match ($tag->getName()) {
+            "kdrpe.kills" => $tag->setValue((string)$kills),
+            "kdrpe.deaths" => $tag->setValue((string)$deaths),
+            "kdrpe.kdr" => $tag->setValue((string)($kdr))
+
+            default => null,
+        };
     }
 }
