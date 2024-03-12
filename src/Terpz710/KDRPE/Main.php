@@ -235,12 +235,12 @@ class Main extends PluginBase implements Listener {
         $kills = $this->getKills($player->getName());
         $deaths = $this->getDeaths($player->getName());
 
-            if ($deaths === 0) {
-                $kdr = $kills;
-            } else {
-                $kdr = $kills / $deaths;
-            }
-            $kdr = round($kdr, 3);
+        if ($deaths === 0) {
+            $kdr = $kills;
+        } else {
+            $kdr = $kills / $deaths;
+        }
+        $kdr = round($kdr, 3);
 
         if ($player === null) {
             return;
@@ -249,8 +249,7 @@ class Main extends PluginBase implements Listener {
         match ($tag->getName()) {
             "kdrpe.kills" => $tag->setValue((string)$kills),
             "kdrpe.deaths" => $tag->setValue((string)$deaths),
-            "kdrpe.kdr" => $tag->setValue((string)($kdr))
-
+            "kdrpe.kdr" => $tag->setValue((string)($kdr)),
             default => null,
         };
     }
