@@ -10,6 +10,9 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityTeleportEvent;
+use pocketmine\event\world\ChunkLoadEvent;
+use pocketmine\event\world\WorldUnloadEvent;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\WorldManager;
@@ -28,11 +31,11 @@ class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->getServer()->getCommandMap()->registerAll("KDR-PE", [
-			new KDRCommand($this),
-			new SeeKDRCommand($this),
-			new TopKillCommand($this),
-			new TopKillFTCommand($this)
-		]);
+            new KDRCommand($this),
+            new SeeKDRCommand($this),
+            new TopKillCommand($this),
+            new TopKillFTCommand($this)
+        ]);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
         if (!is_dir($kdrFolderPath)) {
@@ -55,19 +58,37 @@ class Main extends PluginBase implements Listener {
             $initialData = [];
             file_put_contents($ftDataPath, json_encode($initialData, JSON_PRETTY_PRINT));
         }
-        if (file_exists($ftDataPath)) {
-            $ftData = json_decode(file_get_contents($ftDataPath), true);
-            foreach ($ftData as $tag => $positionData) {
-                $position = new Position($positionData['x'], $positionData['y'], $positionData['z'], $this->getServer()->getWorldManager()->getWorldByName($positionData['world']));
-                FloatingKDRAPI::create($position, $tag, '', $this->getDataFolder());
-            }
-        }
     }
 
     public function onDisable(): void {
         $ftFolderPath = $this->getDataFolder() . 'FT';
-        $ftDataPath = $ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json';
-        FloatingKDRAPI::saveToFile($ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json');
+        FloatingKDRAPI::saveToFile($ftFolderPath);
+    }
+
+    public function onEntityTeleport(EntityTeleportEvent $event): void {
+        $entity = $event->getEntity();
+        if ($entity instanceof Player) {
+            $fromWorld = $event->getFrom()->getWorld();
+            $toWorld = $event->getTo()->getWorld();
+            
+            if ($fromWorld !== $toWorld) {
+                foreach (FloatingKDRAPI::$floatingText as $tag => [$position, $floatingText]) {
+                    if ($position->getWorld() === $fromWorld) {
+                        FloatingKDRAPI::makeInvisible($tag);
+                    }
+                }
+            }
+        }
+    }
+
+    public function onChunkLoad(ChunkLoadEvent $event): void {
+        $ftFolderPath = $this->getDataFolder() . "FT";
+        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
+    }
+
+    public function onWorldUnload(WorldUnloadEvent $event): void {
+        $ftFolderPath = $this->getDataFolder() . 'FT'; 
+        FloatingKDRAPI::saveToFile($ftFolderPath);
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
@@ -94,15 +115,7 @@ class Main extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $playerName = $player->getName();
         $this->initializePlayerData($playerName);
-        $ftFolderPath = $this->getDataFolder() . 'FT';
-        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json', $ftFolderPath);
         $this->updateScoreHudTags($player);
-    }
-
-    public function onPlayerQuit(PlayerQuitEvent $event): void {
-        $player = $event->getPlayer();
-        $ftFolderPath = $this->getDataFolder() . 'FT';
-        FloatingKDRAPI::saveToFile($ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json');
     }
 
     private function initializePlayerData(string $playerName): void {
@@ -134,9 +147,9 @@ class Main extends PluginBase implements Listener {
     }
 
     private function updateFloatingText() {
-    $ftFolderPath = $this->getDataFolder() . 'FT';
-    $text = $this->getFloatingText();
-    FloatingKDRAPI::update('topkill', $text, $ftFolderPath);
+        $ftFolderPath = $this->getDataFolder() . 'FT';
+        $text = $this->getFloatingText();
+        FloatingKDRAPI::update('topkill', $text, $ftFolderPath);
     }
 
     private function getFloatingText(): string {
@@ -192,26 +205,26 @@ class Main extends PluginBase implements Listener {
     }
 
     public function updateScoreHudTags(Player $player): void
-{
-    if (class_exists(ScoreHud::class)) {
-        $kills = $this->getKills($player->getName());
-        $deaths = $this->getDeaths($player->getName());
+    {
+        if (class_exists(ScoreHud::class)) {
+            $kills = $this->getKills($player->getName());
+            $deaths = $this->getDeaths($player->getName());
 
-        if ($deaths === 0) {
-            $kdr = $kills;
-        } else {
-            $kdr = $kills / $deaths;
-        }
-        $kdr = round($kdr, 3);
-        $ev = new PlayerTagsUpdateEvent(
-            $player,
-            [
-                new ScoreTag("kdrpe.kills", (string)$kills),
-                new ScoreTag("kdrpe.deaths", (string)$deaths),
-                new ScoreTag("kdrpe.kdr", (string)$kdr)
-            ]
-        );
-        $ev->call();
+            if ($deaths === 0) {
+                $kdr = $kills;
+            } else {
+                $kdr = $kills / $deaths;
+            }
+            $kdr = round($kdr, 3);
+            $ev = new PlayerTagsUpdateEvent(
+                $player,
+                [
+                    new ScoreTag("kdrpe.kills", (string)$kills),
+                    new ScoreTag("kdrpe.deaths", (string)$deaths),
+                    new ScoreTag("kdrpe.kdr", (string)$kdr)
+                ]
+            );
+            $ev->call();
         }
     }
 }
