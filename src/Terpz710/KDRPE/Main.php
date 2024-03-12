@@ -242,10 +242,6 @@ class Main extends PluginBase implements Listener {
         }
         $kdr = round($kdr, 3);
 
-        if ($player === null) {
-            return;
-        }
-
         match ($tag->getName()) {
             "kdrpe.kills" => $tag->setValue((string)$kills),
             "kdrpe.deaths" => $tag->setValue((string)$deaths),
