@@ -18,6 +18,14 @@ This plugin creates a floating text leaderboard that shows off the top kills on 
 * Scorehud support
 * CREATE A TOP KILL LEADERBOARD(Floating Text).
 
+## ScoreHud Tags
+
+* Kills: {kdrpe.kills}
+* Deaths: {kdrpe.deaths}
+* KDR: {kdrpe.kdr}
+
+Link to his plugin: [ScoreHud](https://github.com/Ifera/ScoreHud)
+
 # Permissions/Commands
 ```
 
