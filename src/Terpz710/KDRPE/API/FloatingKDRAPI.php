@@ -6,62 +6,53 @@ namespace Terpz710\KDRPE\API;
 
 use pocketmine\world\particle\FloatingTextParticle;
 use pocketmine\world\Position;
+use pocketmine\world\WorldManager;
+use pocketmine\world\World;
 use pocketmine\Server;
 
 class FloatingKDRAPI {
-    private static array $floatingText = [];
+    public static array $floatingText = [];
 
     public static function create(Position $position, string $tag, string $text, string $ftFolderPath): void {
-        $floatingText = new FloatingTextParticle(str_replace('{line}', "\n", $text));
-
+        $floatingText = new FloatingTextParticle(str_replace("{line}", "\n", $text));
         if (array_key_exists($tag, self::$floatingText)) {
             self::remove($tag, $ftFolderPath);
         }
-
-        self::$floatingText[$tag] = ['position' => $position, 'text' => $text, 'particle' => $floatingText, 'folderPath' => $ftFolderPath];
-
-        if ($position->getWorld() !== null && $position->getWorld()->isLoaded()) {
-            self::addParticleToWorld($tag);
-        }
-    }
-
-    private static function addParticleToWorld(string $tag): void {
-        $data = self::$floatingText[$tag] ?? null;
-
-        if ($data !== null) {
-            $position = $data['position'];
-            $text = $data['text'];
-            $floatingText = $data['particle'];
-            $ftFolderPath = $data['folderPath'];
-
-            $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
-
-            unset(self::$floatingText[$tag]);
-        }
+        self::$floatingText[$tag] = [$position, $floatingText];
+        $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
+        self::saveToFile($ftFolderPath);
     }
 
     public static function remove(string $tag, string $ftFolderPath): void {
         if (!array_key_exists($tag, self::$floatingText)) {
             return;
         }
-
-        $position = self::$floatingText[$tag]['position'];
-        $floatingText = self::$floatingText[$tag]['particle'];
+        $floatingText = self::$floatingText[$tag][1];
         $floatingText->setInvisible();
-        $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
+        self::$floatingText[$tag][1] = $floatingText;
+        self::$floatingText[$tag][0]->getWorld()->addParticle(self::$floatingText[$tag][0], $floatingText, self::$floatingText[$tag][0]->getWorld()->getPlayers());
         unset(self::$floatingText[$tag]);
+        self::saveToFile($ftFolderPath);
     }
 
     public static function update(string $tag, string $text, string $ftFolderPath): void {
         if (!array_key_exists($tag, self::$floatingText)) {
             return;
         }
+        $floatingText = self::$floatingText[$tag][1];
+        $floatingText->setText(str_replace("{line}", "\n", $text));
+        self::$floatingText[$tag][1] = $floatingText;
+        self::$floatingText[$tag][0]->getWorld()->addParticle(self::$floatingText[$tag][0], $floatingText, self::$floatingText[$tag][0]->getWorld()->getPlayers());
+        self::saveToFile($ftFolderPath);
+    }
 
-        $position = self::$floatingText[$tag]['position'];
-        $floatingText = self::$floatingText[$tag]['particle'];
-        $floatingText->setText(str_replace('{line}', "\n", $text));
-        self::$floatingText[$tag]['text'] = $text;
-        $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
+    public static function makeInvisible(string $tag): void {
+        if (array_key_exists($tag, self::$floatingText)) {
+            $floatingText = self::$floatingText[$tag][1];
+            $floatingText->setInvisible();
+            self::$floatingText[$tag][1] = $floatingText;
+            self::$floatingText[$tag][0]->getWorld()->addParticle(self::$floatingText[$tag][0], $floatingText, self::$floatingText[$tag][0]->getWorld()->getPlayers());
+        }
     }
 
     public static function loadFromFile(string $filePath, string $ftFolderPath): void {
@@ -69,30 +60,25 @@ class FloatingKDRAPI {
             $data = json_decode(file_get_contents($filePath), true);
 
             foreach ($data as $tag => $textData) {
-                $position = new Position($textData['x'], $textData['y'], $textData['z'], Server::getInstance()->getWorldManager()->getWorldByName($textData['world']));
-                self::create($position, $tag, $textData['text'], $ftFolderPath);
+                $position = new Position($textData["x"], $textData["y"], $textData["z"], Server::getInstance()->getWorldManager()->getWorldByName($textData["world"]));
+                self::create($position, $tag, $textData["text"], $ftFolderPath);
             }
         }
     }
 
-    public static function getFloatingTextData(): array {
-        return self::$floatingText;
-    }
-
-    public static function saveToFile(string $filePath): void {
+    public static function saveToFile(string $ftFolderPath): void {
+        $filePath = $ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json";
         $data = [];
 
-        foreach (self::$floatingText as $tag => $textData) {
-            $position = $textData['position'];
+        foreach (self::$floatingText as $tag => [$position, $floatingText]) {
             $data[$tag] = [
-                'x' => $position->x,
-                'y' => $position->y,
-                'z' => $position->z,
-                'world' => $position->getWorld()->getFolderName(),
-                'text' => $textData['text'],
+                "text" => str_replace("\n", "{line}", $floatingText->getText()),
+                "x" => $position->x,
+                "y" => $position->y,
+                "z" => $position->z,
+                "world" => $position->getWorld()->getFolderName(),
             ];
         }
-
-        file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT));
-        }
+        file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
+}
