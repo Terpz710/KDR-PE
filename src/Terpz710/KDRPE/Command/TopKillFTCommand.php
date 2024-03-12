@@ -53,7 +53,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
         }
         
         $tag = 'topkill';
-        $ftFolderPath = $this->getDataFolder() . 'FT'; 
+        $ftFolderPath = $this->plugin->getDataFolder() . 'FT'; 
         FloatingKDRAPI::saveToFile($ftFolderPath);
         FloatingKDRAPI::create($position, $tag, $text, $this->plugin->getDataFolder());
         $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
