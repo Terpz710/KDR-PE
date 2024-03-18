@@ -39,13 +39,13 @@ class TopKillCommand extends Command implements PluginOwned {
                 }
                 $content .= "-----------";
 
-                $form = new SimpleForm(function (Player $player, ?int $data) use ($content) {
+                $form = new SimpleForm(function (Player $player, ?int $data) {
                 });
                 $form->setTitle("Top Kills");
                 $form->setContent($content);
                 $sender->sendForm($form);
             } else {
-                $sender->sendMessage("§l§f(§c!§f)§r§f No top kills yet!"); //This message shouldnt get sent either way unless the json gets currupted.
+                $sender->sendMessage("§l§f(§c!§f)§r§f No top kills yet!");
             }
         } else {
             $sender->sendMessage("§cThis command can only be used in-game.");
