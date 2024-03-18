@@ -8,7 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 use Terpz710\KDRPE\Main;
 use JoJoe77777\FormAPI\SimpleForm;
