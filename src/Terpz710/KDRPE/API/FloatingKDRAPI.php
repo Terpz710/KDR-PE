@@ -83,8 +83,6 @@ class FloatingKDRAPI {
                     } else {
                         $server->getLogger()->warning("Chunk not loaded for floating text with tag '$tag'.");
                     }
-                } else {
-                    $server->getLogger()->warning("World '{$textData["world"]}' not found for floating text with tag '$tag'.");
                 }
             }
         }
