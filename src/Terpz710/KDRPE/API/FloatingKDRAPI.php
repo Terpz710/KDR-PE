@@ -18,7 +18,7 @@ class FloatingKDRAPI {
         $world = $position->getWorld();
 
         if ($world !== null) {
-            $chunk = $world->getChunkAtPosition($position);
+            $chunk = $world->getOrLoadChunkAtPosition($position);
             if ($chunk !== null) {
                 $floatingText = new FloatingTextParticle(str_replace("{line}", "\n", $text));
 
@@ -73,13 +73,13 @@ class FloatingKDRAPI {
         if (file_exists($filePath)) {
             $data = json_decode(file_get_contents($filePath), true);
 
-            $server = Server::getInstance(); // Get the server instance outside the loop for efficiency
+            $server = Server::getInstance();
 
             foreach ($data as $tag => $textData) {
                 $world = $server->getWorldManager()->getWorldByName($textData["world"]);
                 if ($world !== null) {
                     $position = new Position($textData["x"], $textData["y"], $textData["z"], $world);
-                    $chunk = $world->getChunkAtPosition($position);
+                    $chunk = $world->getOrLoadChunkAtPosition($position);
                     if ($chunk !== null) {
                         self::create($position, $tag, $textData["text"], $ftFolderPath);
                     } else {
