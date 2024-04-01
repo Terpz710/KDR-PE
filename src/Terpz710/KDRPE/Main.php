@@ -64,7 +64,9 @@ class Main extends PluginBase implements Listener {
 
     public function onDisable(): void {
         $ftFolderPath = $this->getDataFolder() . 'FT';
-        FloatingKDRAPI::saveToFile($ftFolderPath);
+        $jsonData = FloatingKDRAPI::saveFile();
+        $filePath = $ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json";
+        file_put_contents($filePath, $jsonData);
     }
 
     public function onEntityTeleport(EntityTeleportEvent $event): void {
