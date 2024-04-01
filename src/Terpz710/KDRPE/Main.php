@@ -13,6 +13,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\world\ChunkLoadEvent;
 use pocketmine\event\world\WorldUnloadEvent;
+use pocketmine\event\world\WorldLoadEvent;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\WorldManager;
@@ -85,6 +86,11 @@ class Main extends PluginBase implements Listener {
     public function onChunkLoad(ChunkLoadEvent $event): void {
         $ftFolderPath = $this->getDataFolder() . "FT";
         FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
+    }
+
+    public function onWorldLoad(WorldloadEvent $event): void {
+        $ftFolderPath = $this->getDataFolder() . 'FT'; 
+        FloatingKDRAPI::loadFromFile($ftFolderPath);
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
