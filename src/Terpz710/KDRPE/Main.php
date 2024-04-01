@@ -88,9 +88,9 @@ class Main extends PluginBase implements Listener {
         FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
     }
 
-    public function onWorldLoad(WorldloadEvent $event): void {
+    public function onWorldLoad(WorldLoadEvent $event): void {
         $ftFolderPath = $this->getDataFolder() . 'FT'; 
-        FloatingKDRAPI::loadFromFile($ftFolderPath);
+        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
