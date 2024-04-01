@@ -81,4 +81,8 @@ class FloatingKDRAPI {
         }
         file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
+
+    public static function saveFile(): string {
+        return json_encode(self::$floatingText, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
 }
