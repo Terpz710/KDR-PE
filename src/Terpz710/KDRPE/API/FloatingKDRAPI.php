@@ -14,13 +14,27 @@ class FloatingKDRAPI {
     public static array $floatingText = [];
 
     public static function create(Position $position, string $tag, string $text, string $ftFolderPath): void {
-        $floatingText = new FloatingTextParticle(str_replace("{line}", "\n", $text));
-        if (array_key_exists($tag, self::$floatingText)) {
-            self::remove($tag, $ftFolderPath);
+        $server = Server::getInstance();
+        $world = $position->getWorld();
+
+        if ($world !== null) {
+            $chunk = $world->getChunkAtPosition($position);
+            if ($chunk !== null) {
+                $floatingText = new FloatingTextParticle(str_replace("{line}", "\n", $text));
+
+                if (array_key_exists($tag, self::$floatingText)) {
+                    self::remove($tag, $ftFolderPath);
+                }
+
+                self::$floatingText[$tag] = [$position, $floatingText];
+                $world->addParticle($position, $floatingText, $world->getPlayers());
+                self::saveToFile($ftFolderPath);
+            } else {
+                $server->getLogger()->warning("Chunk not loaded for floating text with tag '$tag'.");
+            }
+        } else {
+            $server->getLogger()->warning("Invalid world for floating text with tag '$tag'.");
         }
-        self::$floatingText[$tag] = [$position, $floatingText];
-        $position->getWorld()->addParticle($position, $floatingText, $position->getWorld()->getPlayers());
-        self::saveToFile($ftFolderPath);
     }
 
     public static function remove(string $tag, string $ftFolderPath): void {
@@ -59,9 +73,21 @@ class FloatingKDRAPI {
         if (file_exists($filePath)) {
             $data = json_decode(file_get_contents($filePath), true);
 
+            $server = Server::getInstance(); // Get the server instance outside the loop for efficiency
+
             foreach ($data as $tag => $textData) {
-                $position = new Position($textData["x"], $textData["y"], $textData["z"], Server::getInstance()->getWorldManager()->getWorldByName($textData["world"]));
-                self::create($position, $tag, $textData["text"], $ftFolderPath);
+                $world = $server->getWorldManager()->getWorldByName($textData["world"]);
+                if ($world !== null) {
+                    $position = new Position($textData["x"], $textData["y"], $textData["z"], $world);
+                    $chunk = $world->getChunkAtPosition($position);
+                    if ($chunk !== null) {
+                        self::create($position, $tag, $textData["text"], $ftFolderPath);
+                    } else {
+                        $server->getLogger()->warning("Chunk not loaded for floating text with tag '$tag'.");
+                    }
+                } else {
+                    $server->getLogger()->warning("World '{$textData["world"]}' not found for floating text with tag '$tag'.");
+                }
             }
         }
     }
