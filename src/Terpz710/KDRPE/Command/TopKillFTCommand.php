@@ -18,7 +18,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext');
+        parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', ["topkillft", "tkft", "kdrft"]);
         $this->setPermission('kdrpe.command.topkillft');
         $this->plugin = $plugin;
     }
