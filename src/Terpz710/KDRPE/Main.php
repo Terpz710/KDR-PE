@@ -63,10 +63,15 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onDisable(): void {
-        $ftFolderPath = $this->getDataFolder() . 'FT';
+        $ftFolderPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . 'FT';
         $jsonData = FloatingKDRAPI::saveFile();
         $filePath = $ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json";
         file_put_contents($filePath, $jsonData);
+    }
+
+    public function onChunkLoad(ChunkLoadEvent $event): void {
+        $ftFolderPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . "FT";
+        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
     }
 
     public function onEntityTeleport(EntityTeleportEvent $event): void {
@@ -83,11 +88,6 @@ class Main extends PluginBase implements Listener {
                 }
             }
         }
-    }
-
-    public function onChunkLoad(ChunkLoadEvent $event): void {
-        $ftFolderPath = $this->getDataFolder() . "FT";
-        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
     }
 
     public function onDeath(PlayerDeathEvent $event): void {
