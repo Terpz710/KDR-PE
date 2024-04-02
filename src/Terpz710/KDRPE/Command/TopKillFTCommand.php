@@ -18,7 +18,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', ["topkillft", "tkft", "kdrft"]);
+        parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext', ["topkillft", "tkft", "kdrft"]);
         $this->setPermission('kdrpe.command.topkillft');
         $this->plugin = $plugin;
     }
@@ -53,9 +53,8 @@ class TopKillFTCommand extends Command implements PluginOwned {
         }
         
         $tag = 'topkill';
-        $ftFolderPath = $this->plugin->getDataFolder() . 'FT'; 
-        FloatingKDRAPI::saveToFile($ftFolderPath);
-        FloatingKDRAPI::create($position, $tag, $text, $this->plugin->getDataFolder());
+        FloatingKDRAPI::create($position, $tag, $text);
+        FloatingKDRAPI::saveToFile(Main::getInstance()->getDataFolder());
         $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
         return true;
     }
