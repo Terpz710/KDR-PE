@@ -12,6 +12,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\world\ChunkLoadEvent;
+use pocketmine\event\world\ChunkUnloadEvent;
 use pocketmine\event\world\WorldUnloadEvent;
 use pocketmine\event\world\WorldLoadEvent;
 use pocketmine\player\Player;
@@ -31,6 +32,12 @@ use Ifera\ScoreHud\event\TagsResolveEvent;
 
 class Main extends PluginBase implements Listener {
 
+    private static $instance;
+
+    public function onLoad(): void {
+        self::$instance = $this;
+    }
+
     public function onEnable(): void {
         $this->getServer()->getCommandMap()->registerAll("KDR-PE", [
             new KDRCommand($this),
@@ -41,7 +48,7 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
         if (!is_dir($kdrFolderPath)) {
-            @mkdir($kdrFolderPath);
+        @mkdir($kdrFolderPath);
         }
 
         $dataPath = $kdrFolderPath . DIRECTORY_SEPARATOR . 'data.json';
@@ -50,12 +57,7 @@ class Main extends PluginBase implements Listener {
             file_put_contents($dataPath, json_encode($initialData, JSON_PRETTY_PRINT));
         }
 
-        $ftFolderPath = $this->getDataFolder() . 'FT';
-        if (!is_dir($ftFolderPath)) {
-            @mkdir($ftFolderPath);
-        }
-
-        $ftDataPath = $ftFolderPath . DIRECTORY_SEPARATOR . 'floating_text_data.json';
+        $ftDataPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . 'floating_text_data.json';
         if (!file_exists($ftDataPath)) {
             $initialData = [];
             file_put_contents($ftDataPath, json_encode($initialData, JSON_PRETTY_PRINT));
@@ -63,15 +65,24 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onDisable(): void {
-        $ftFolderPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . 'FT';
-        $jsonData = FloatingKDRAPI::saveFile();
-        $filePath = $ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json";
-        file_put_contents($filePath, $jsonData);
+        FloatingKDRAPI::saveFile();
+    }
+
+    public static function getInstance(): ?Main {
+        return self::$instance;
     }
 
     public function onChunkLoad(ChunkLoadEvent $event): void {
-        $ftFolderPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . "FT";
-        FloatingKDRAPI::loadFromFile($ftFolderPath . DIRECTORY_SEPARATOR . "floating_text_data.json", $ftFolderPath);
+        $filePath = $this->getDataFolder() . "floating_text_data.json";
+        FloatingKDRAPI::loadFromFile($filePath);
+    }
+
+    public function onChunkUnload(ChunkUnloadEvent $event): void {
+        FloatingKDRAPI::saveFile();
+    }
+
+    public function onWorldUnload(WorldUnloadEvent $event): void {
+        FloatingKDRAPI::saveFile();
     }
 
     public function onEntityTeleport(EntityTeleportEvent $event): void {
@@ -79,7 +90,7 @@ class Main extends PluginBase implements Listener {
         if ($entity instanceof Player) {
             $fromWorld = $event->getFrom()->getWorld();
             $toWorld = $event->getTo()->getWorld();
-            
+        
             if ($fromWorld !== $toWorld) {
                 foreach (FloatingKDRAPI::$floatingText as $tag => [$position, $floatingText]) {
                     if ($position->getWorld() === $fromWorld) {
@@ -146,9 +157,9 @@ class Main extends PluginBase implements Listener {
     }
 
     private function updateFloatingText() {
-        $ftFolderPath = $this->getDataFolder() . 'FT';
+        $filePath = $this->getDataFolder() . "floating_text_data.json";
         $text = $this->getFloatingText();
-        FloatingKDRAPI::update('topkill', $text, $ftFolderPath);
+        FloatingKDRAPI::update('topkill', $text, $filePath);
     }
 
     private function getFloatingText(): string {
