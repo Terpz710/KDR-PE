@@ -159,7 +159,7 @@ class Main extends PluginBase implements Listener {
     private function updateFloatingText() {
         $filePath = $this->getDataFolder() . "floating_text_data.json";
         $text = $this->getFloatingText();
-        FloatingKDRAPI::update('topkill', $text, $filePath);
+        FloatingKDRAPI::update($text, $filePath);
     }
 
     private function getFloatingText(): string {
