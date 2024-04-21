@@ -158,6 +158,11 @@ class Main extends PluginBase implements Listener {
         //unset($this->killStreaks[$playerName]);
     //}
 
+    public function onPlayerQuit(PlayerQuitEvent $event) {
+        $player = $event->getPlayer();
+        $this->saveKillStreakData(); // Save kill streak data when a player quits
+    }
+
     public function onPlayerJoin(PlayerJoinEvent $event) {
         $player = $event->getPlayer();
         $playerName = $player->getName();
