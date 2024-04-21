@@ -18,7 +18,7 @@ permissions:
     default: true
   kdrpe.command.killstreak:
     description: Allows the player to see their kill streak.
-    default: op
+    default: true
   kdrpe.command.topkillft:
     description: Allows the OP to add/remove the top kill floating text.
     default: op
