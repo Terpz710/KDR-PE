@@ -67,10 +67,12 @@ class Main extends PluginBase implements Listener {
             $initialData = [];
             file_put_contents($ftDataPath, json_encode($initialData, JSON_PRETTY_PRINT));
         }
+        $this->loadKillStreakData();
     }
 
     public function onDisable(): void {
         FloatingKDRAPI::saveFile();
+        $this->saveKillStreakData();
     }
 
     public static function getInstance(): ?Main {
@@ -129,12 +131,23 @@ class Main extends PluginBase implements Listener {
         $this->incrementDeath($player->getName());
         $this->updateScoreHudTags($player);
         $this->updateFloatingText();
+        $this->saveKillStreakData();
     }
 
     private function handleKillStreak(string $playerName, int $killStreak) {
         if ($killStreak >= 5) {
             $this->getServer()->broadcastMessage("{$playerName} is on a {$killStreak}-kill streak!");
         }
+    }
+
+    private function loadKillStreakData(): void {
+        $this->killStreakConfig = new Config($this->getDataFolder() . 'killstreak.json', Config::JSON, []);
+        $this->killStreaks = $this->killStreakConfig->getAll();
+    }
+
+    private function saveKillStreakData(): void {
+        $this->killStreakConfig->setAll($this->killStreaks);
+        $this->killStreakConfig->save();
     }
 
     public function getKillStreak(string $playerName): int {
