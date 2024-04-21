@@ -36,6 +36,7 @@ class Main extends PluginBase implements Listener {
 
     private static $instance;
     private array $killStreaks = [];
+    private Config $killStreakConfig;
 
     public function onLoad(): void {
         self::$instance = $this;
