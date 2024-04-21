@@ -256,8 +256,7 @@ class Main extends PluginBase implements Listener {
         return array_slice($topKills, 0, 10);
     }
 
-    public function updateScoreHudTags(Player $player)
-    {
+    public function updateScoreHudTags(Player $player) {
         if (class_exists(ScoreHud::class)) {
             $kills = $this->getKills($player->getName());
             $deaths = $this->getDeaths($player->getName());
@@ -268,12 +267,14 @@ class Main extends PluginBase implements Listener {
                 $kdr = $kills / $deaths;
             }
             $kdr = round($kdr, 3);
+            $killStreak = $this->getKillStreak($player->getName());
             $ev = new PlayerTagsUpdateEvent(
                 $player,
                 [
                     new ScoreTag("kdrpe.kills", (string)$kills),
                     new ScoreTag("kdrpe.deaths", (string)$deaths),
-                    new ScoreTag("kdrpe.kdr", (string)$kdr)
+                    new ScoreTag("kdrpe.kdr", (string)$kdr),
+                    new ScoreTag("kdrpe.killstreak", (string)$killStreak),
                 ]
             );
             $ev->call();
@@ -292,11 +293,12 @@ class Main extends PluginBase implements Listener {
             $kdr = $kills / $deaths;
         }
         $kdr = round($kdr, 3);
-
+        $killStreak = $this->getKillStreak($player->getName());
         match ($tag->getName()) {
             "kdrpe.kills" => $tag->setValue((string)$kills),
             "kdrpe.deaths" => $tag->setValue((string)$deaths),
             "kdrpe.kdr" => $tag->setValue((string)($kdr)),
+            "kdrpe.killstreak" => $tag->setValue((string)$killStreak), // Set value for kill streak tag
             default => null,
         };
     }
