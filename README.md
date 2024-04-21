@@ -15,6 +15,8 @@ This plugin creates a floating text leaderboard that shows off the top kills on 
 * KDR system
 * Topkill system
 * See other players KDRS
+* Killstreak tracker
+* See other players killstreak
 * Scorehud support
 * CREATE A TOP KILL LEADERBOARD(Floating Text).
 
@@ -23,6 +25,7 @@ This plugin creates a floating text leaderboard that shows off the top kills on 
 * Kills: {kdrpe.kills}
 * Deaths: {kdrpe.deaths}
 * KDR: {kdrpe.kdr}
+* KillStreak: {kdrpe.killstreak}
 
 Link to his plugin: [ScoreHud](https://github.com/Ifera/ScoreHud)
 
@@ -31,33 +34,49 @@ Link to his plugin: [ScoreHud](https://github.com/Ifera/ScoreHud)
 
 **KDR Command**
 
-/kdr
+Command: /kdr
 
-kdr-pe.command.kdr
+Permission: kdr-pe.command.kdr
 
 defualt: true
 
 **SeeKDR Command**
 
-/seekdr
+Command: /seekdr
 
-kdr-pe.command.seekdr
+Permission: kdr-pe.command.seekdr
+
+default: true
+
+**Killstreak Command**
+
+Command: /killstreak
+
+Permission: kdr-pe.command.killstreak
+
+default: true
+
+**SeeKillStreak Command**
+
+Command: /seekillstreak
+
+Permission: kdr-pe.command.seekillstreak
 
 default: true
 
 **TopKill Command**
 
-/topkill
+Command: /topkill
 
-kdr-pe.command.topkill
+Permission: kdr-pe.command.topkill
 
 default: true
 
 **TopKillFloatingText Command**
 
-/topkillfloatingtext
+Command: /topkillfloatingtext
 
-kdr-pe.command.topkillft
+Permission: kdr-pe.command.topkillft
 
 default: op
 ```
