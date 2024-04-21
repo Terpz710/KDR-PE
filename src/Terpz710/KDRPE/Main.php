@@ -160,7 +160,7 @@ class Main extends PluginBase implements Listener {
 
     public function onPlayerQuit(PlayerQuitEvent $event) {
         $player = $event->getPlayer();
-        $this->saveKillStreakData(); // Save kill streak data when a player quits
+        $this->saveKillStreakData();
     }
 
     public function onPlayerJoin(PlayerJoinEvent $event) {
