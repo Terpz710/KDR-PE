@@ -25,6 +25,7 @@ use Terpz710\KDRPE\Command\SeeKDRCommand;
 use Terpz710\KDRPE\Command\TopKillCommand;
 use Terpz710\KDRPE\Command\TopKillFTCommand;
 use Terpz710\KDRPE\Command\KillStreakCommand;
+use Terpz710\KDRPE\Command\SeeKillStreakCommand;
 use Terpz710\KDRPE\API\FloatingKDRAPI;
 use Ifera\ScoreHud\event\PlayerTagsUpdateEvent;
 use Ifera\ScoreHud\scoreboard\ScoreTag;
@@ -46,7 +47,8 @@ class Main extends PluginBase implements Listener {
             new SeeKDRCommand($this),
             new TopKillCommand($this),
             new TopKillFTCommand($this),
-            new KillStreakCommand($this)
+            new KillStreakCommand($this),
+            new SeeKillStreakCommand($this)
         ]);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
