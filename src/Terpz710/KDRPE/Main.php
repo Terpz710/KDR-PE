@@ -133,13 +133,13 @@ class Main extends PluginBase implements Listener {
         }
     }
 
-    private function getKillStreak(string $playerName): int {
-        return $this->killStreaks[$playerName] ?? 0;
-    }
+    //private function getKillStreak(string $playerName): int {
+        //return $this->killStreaks[$playerName] ?? 0;
+    //}
 
-    private function resetKillStreak(string $playerName) {
-        unset($this->killStreaks[$playerName]);
-    }
+    //private function resetKillStreak(string $playerName) {
+        //unset($this->killStreaks[$playerName]);
+    //}
 
     public function onPlayerJoin(PlayerJoinEvent $event) {
         $player = $event->getPlayer();
