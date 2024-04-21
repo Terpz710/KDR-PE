@@ -33,6 +33,7 @@ use Ifera\ScoreHud\event\TagsResolveEvent;
 class Main extends PluginBase implements Listener {
 
     private static $instance;
+    private array $killStreaks = [];
 
     public function onLoad(): void {
         self::$instance = $this;
@@ -72,20 +73,20 @@ class Main extends PluginBase implements Listener {
         return self::$instance;
     }
 
-    public function onChunkLoad(ChunkLoadEvent $event): void {
+    public function onChunkLoad(ChunkLoadEvent $event) {
         $filePath = $this->getDataFolder() . "floating_text_data.json";
         FloatingKDRAPI::loadFromFile($filePath);
     }
 
-    public function onChunkUnload(ChunkUnloadEvent $event): void {
+    public function onChunkUnload(ChunkUnloadEvent $event) {
         FloatingKDRAPI::saveFile();
     }
 
-    public function onWorldUnload(WorldUnloadEvent $event): void {
+    public function onWorldUnload(WorldUnloadEvent $event) {
         FloatingKDRAPI::saveFile();
     }
 
-    public function onEntityTeleport(EntityTeleportEvent $event): void {
+    public function onEntityTeleport(EntityTeleportEvent $event) {
         $entity = $event->getEntity();
         if ($entity instanceof Player) {
             $fromWorld = $event->getFrom()->getWorld();
@@ -101,10 +102,9 @@ class Main extends PluginBase implements Listener {
         }
     }
 
-    public function onDeath(PlayerDeathEvent $event): void {
+    public function onDeath(PlayerDeathEvent $event) {
         $player = $event->getPlayer();
         $this->initializePlayerData($player->getName());
-
         $cause = $player->getLastDamageCause();
 
         if ($cause instanceof EntityDamageByEntityEvent) {
@@ -113,24 +113,43 @@ class Main extends PluginBase implements Listener {
             if ($damager instanceof Player) {
                 $this->incrementKill($damager->getName());
                 $this->updateScoreHudTags($damager);
+
+                if (isset($this->killStreaks[$damager->getName()])) {
+                    $this->killStreaks[$damager->getName()]++;
+                } else {
+                    $this->killStreaks[$damager->getName()] = 1;
+                }
+                $this->handleKillStreak($damager->getName(), $this->killStreaks[$damager->getName()]);
             }
         }
-
         $this->incrementDeath($player->getName());
         $this->updateScoreHudTags($player);
         $this->updateFloatingText();
     }
 
-    public function onPlayerJoin(PlayerJoinEvent $event): void {
+    private function handleKillStreak(string $playerName, int $killStreak) {
+        if ($killStreak >= 5) {
+            $this->getServer()->broadcastMessage("{$playerName} is on a {$killStreak}-kill streak!");
+        }
+    }
+
+    private function getKillStreak(string $playerName): int {
+        return $this->killStreaks[$playerName] ?? 0;
+    }
+
+    private function resetKillStreak(string $playerName) {
+        unset($this->killStreaks[$playerName]);
+    }
+
+    public function onPlayerJoin(PlayerJoinEvent $event) {
         $player = $event->getPlayer();
         $playerName = $player->getName();
         $this->initializePlayerData($playerName);
         $this->updateScoreHudTags($player);
     }
 
-    private function initializePlayerData(string $playerName): void {
+    private function initializePlayerData(string $playerName) {
         $dataPath = $this->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
-
         $playerData = json_decode(file_get_contents($dataPath), true);
 
         if (!isset($playerData[$playerName])) {
@@ -140,7 +159,7 @@ class Main extends PluginBase implements Listener {
         }
     }
 
-    private function incrementKill(string $playerName): void {
+    private function incrementKill(string $playerName) {
         $dataPath = $this->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
         $playerData = json_decode(file_get_contents($dataPath), true);
 
@@ -148,7 +167,7 @@ class Main extends PluginBase implements Listener {
         file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
     }
 
-    private function incrementDeath(string $playerName): void {
+    private function incrementDeath(string $playerName) {
         $dataPath = $this->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
         $playerData = json_decode(file_get_contents($dataPath), true);
 
@@ -214,7 +233,7 @@ class Main extends PluginBase implements Listener {
         return array_slice($topKills, 0, 10);
     }
 
-    public function updateScoreHudTags(Player $player): void
+    public function updateScoreHudTags(Player $player)
     {
         if (class_exists(ScoreHud::class)) {
             $kills = $this->getKills($player->getName());
@@ -238,7 +257,7 @@ class Main extends PluginBase implements Listener {
         }
     }
 
-    public function onTagResolve(TagsResolveEvent $event): void {
+    public function onTagResolve(TagsResolveEvent $event) {
         $player = $event->getPlayer();
         $tag = $event->getTag();
         $kills = $this->getKills($player->getName());
