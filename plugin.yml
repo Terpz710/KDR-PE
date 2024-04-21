@@ -1,5 +1,5 @@
 name: KDR-PE
-version: 1.0.2
+version: 1.0.3-beta
 author: Terpz710
 api: 5.0.0
 main: Terpz710\KDRPE\Main
@@ -16,6 +16,9 @@ permissions:
   kdr-pe.command.topkill:
     description: Allows the player to see the top kills.
     default: true
+  kdrpe.command.killstreak:
+    description: Allows the player to see their kill streak.
+    default: op
   kdrpe.command.topkillft:
     description: Allows the OP to add/remove the top kill floating text.
     default: op
