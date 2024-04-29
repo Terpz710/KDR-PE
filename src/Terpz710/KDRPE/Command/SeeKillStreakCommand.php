@@ -42,14 +42,15 @@ class SeeKillStreakCommand extends Command implements PluginOwned {
         }
 
         $targetName = $args[0];
-        $target = $this->plugin->getServer()->getPlayerExact($targetName);
+        $dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
+        $playerData = json_decode(file_get_contents($dataPath), true);
 
-        if ($target === null) {
-            $sender->sendMessage("Player not found.");
-            return;
+        if (isset($playerData[$targetName])) {
+            $killStreak = $this->plugin->getKillStreak($targetName);
+            $sender->sendMessage("-----------§e{$targetName}'s KillStreak§f-----------");
+            $sender->sendMessage("KillStreak: §e{$killStreak}");
+        } else {
+            $sender->sendMessage("Player data not found for $targetName.");
         }
-
-        $killStreak = $this->plugin->getKillStreak($target->getName());
-        $sender->sendMessage("$targetName's current kill streak: $killStreak");
     }
 }
