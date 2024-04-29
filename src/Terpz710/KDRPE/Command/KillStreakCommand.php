@@ -28,7 +28,7 @@ class KillStreakCommand extends Command implements PluginOwned {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): void {
         if (!$sender instanceof Player) {
-            $sender->sendMessage("This command can only be used in-game.");
+            $sender->sendMessage("This command can only be used in-game!");
             return;
         }
 
@@ -38,7 +38,7 @@ class KillStreakCommand extends Command implements PluginOwned {
 
         $playerName = $sender->getName();
         $killStreak = $this->plugin->getKillStreak($playerName);
-
-        $sender->sendMessage("Your current kill streak: $killStreak");
+        $sender->sendMessage("-----------§e{$playerName}'s Stats§f-----------");
+        $sender->sendMessage("KillStreak: §e{$killStreak}");
     }
 }
