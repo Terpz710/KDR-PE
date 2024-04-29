@@ -41,8 +41,8 @@ class TopKillCommand extends Command implements PluginOwned {
                 }
             }
         } else {
-            $sender->sendMessage("§l§f(§c!§f)§r§f No top kills yet!");
-        } // This message shouldnt get sent either way unless the json gets currupted.
+            $sender->sendMessage("§l§c[!]§r§f No top kills yet!");
+        } //This message shouldnt get sent either way unless the json gets currupted...
         return true;
     }
 }
