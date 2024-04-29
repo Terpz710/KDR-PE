@@ -50,7 +50,7 @@ class SeeKillStreakCommand extends Command implements PluginOwned {
             $sender->sendMessage("-----------§e{$targetName}'s KillStreak§f-----------");
             $sender->sendMessage("KillStreak: §e{$killStreak}");
         } else {
-            $sender->sendMessage("Player data not found for $targetName.");
+            $sender->sendMessage("§l§c[!]§r§f KillStreak data not found for {$targetName}!");
         }
     }
 }
