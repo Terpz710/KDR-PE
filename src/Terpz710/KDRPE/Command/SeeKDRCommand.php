@@ -37,7 +37,7 @@ class SeeKDRCommand extends Command implements PluginOwned {
         $inputName = $args[0];
         $playerData = $this->plugin->getPlayerData();
         if (!isset($playerData[$inputName])) {
-            $sender->sendMessage("§l§f(§c!§f)§r§f Player not found: §e{$inputName}");
+            $sender->sendMessage("§l§c[!]§r§f Player not found: §e{$inputName}");
             return false;
         }
         $kills = $this->plugin->getKills($inputName);
