@@ -39,7 +39,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
 
         $topKillData = $this->plugin->getTopKills();
 
-        $text = "-----------§eTOP KILL§f-----------\n";
+        $text = "-----------§eTOP KILLS§f-----------\n";
         $position = $sender->getPosition();
 
         $rank = 1;
@@ -55,7 +55,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
         $tag = 'topkill';
         FloatingKDRAPI::create($position, $tag, $text);
         FloatingKDRAPI::saveToFile(Main::getInstance()->getDataFolder());
-        $sender->sendMessage('§l(§a!§f)§r§f Top Kill leaderboard Floating Text created!');
+        $sender->sendMessage('§l§a[!]§r§f Top Kill leaderboard Floating Text created!');
         return true;
     }
 }
