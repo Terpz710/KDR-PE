@@ -38,7 +38,7 @@ class KillStreakCommand extends Command implements PluginOwned {
 
         $playerName = $sender->getName();
         $killStreak = $this->plugin->getKillStreak($playerName);
-        $sender->sendMessage("-----------§e{$playerName}'s Stats§f-----------");
+        $sender->sendMessage("-----------§e{$playerName}'s KillStreak§f-----------");
         $sender->sendMessage("KillStreak: §e{$killStreak}");
     }
 }
