@@ -129,12 +129,14 @@ class Main extends PluginBase implements Listener {
                 $this->handleKillStreak($damager->getName(), $this->killStreaks[$damager->getName()]);
             }
         }
+
         $this->incrementDeath($player->getName());
+        $this->resetKillStreak($player->getName());
         $this->updateScoreHudTags($player);
         $this->updateFloatingText();
         $this->saveKillStreakData();
     }
-
+    
     private function handleKillStreak(string $playerName, int $killStreak) {
         if ($killStreak >= 5) {
             $this->getServer()->broadcastMessage("{$playerName} is on a {$killStreak}-kill streak!");
@@ -155,9 +157,9 @@ class Main extends PluginBase implements Listener {
         return $this->killStreaks[$playerName] ?? 0;
     }
 
-    //public function resetKillStreak(string $playerName) {
-        //unset($this->killStreaks[$playerName]);
-    //}
+    public function resetKillStreak(string $playerName) {
+        unset($this->killStreaks[$playerName]);
+    }
 
     public function onPlayerQuit(PlayerQuitEvent $event) {
         $player = $event->getPlayer();
@@ -298,7 +300,7 @@ class Main extends PluginBase implements Listener {
             "kdrpe.kills" => $tag->setValue((string)$kills),
             "kdrpe.deaths" => $tag->setValue((string)$deaths),
             "kdrpe.kdr" => $tag->setValue((string)($kdr)),
-            "kdrpe.killstreak" => $tag->setValue((string)$killStreak), // Set value for kill streak tag
+            "kdrpe.killstreak" => $tag->setValue((string)$killStreak),
             default => null,
         };
     }
