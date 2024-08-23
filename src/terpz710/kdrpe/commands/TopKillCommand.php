@@ -2,31 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Terpz710\KDRPE\Command;
+namespace terpz710\kdrpe\commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
 
-use Terpz710\KDRPE\Main;
+use terpz710\kdrpe\Main;
 
 class TopKillCommand extends Command implements PluginOwned {
 
     private $plugin;
+    private $kdrManager;
 
-    public function __construct(Main $plugin) {
+    public function __construct() {
         parent::__construct('topkill', 'Shows top kills', '/topkill');
         $this->setPermission('kdr-pe.command.topkill');
-        $this->plugin = $plugin;
+        $this->plugin = Main::getInstance();
+        $this->kdrManager = Main::getInstance()->getKdrManager();
     }
 
-    public function getOwningPlugin(): Plugin {
+    public function getOwningPlugin() : Plugin{
         return $this->plugin;
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
-        $topKills = $this->plugin->getTopKills();
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
+        $topKills = $this->kdrManager->getTopKills();
 
         if (!empty($topKills)) {
             $sender->sendMessage("-----------§eTop Kills§f-----------");

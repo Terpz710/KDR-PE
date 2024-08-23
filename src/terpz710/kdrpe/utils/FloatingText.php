@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Terpz710\KDRPE\API;
+namespace terpz710\kdrpe\utils;
 
 use pocketmine\Server;
 use pocketmine\world\particle\FloatingTextParticle;
 use pocketmine\world\Position;
 use pocketmine\utils\Config;
 
-use Terpz710\KDRPE\Main;
+use terpz710\kdrpe\Main;
 
-class FloatingKDRAPI {
+class FloatingText{
     public static array $floatingText = [];
 
     public static function create(Position $position, string $tag, string $text): void {

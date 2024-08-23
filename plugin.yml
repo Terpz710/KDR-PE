@@ -1,8 +1,9 @@
 name: KDR-PE
-version: 1.0.3
+version: 1.0.4
 author: Terpz710
+authors: ["WavyCraft"]
 api: 5.0.0
-main: Terpz710\KDRPE\Main
+main: terpz710\kdrpe\Main
 description: A KDR system.
 softdepend: ScoreHud
 

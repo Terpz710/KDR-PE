@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Terpz710\KDRPE\Command;
+namespace terpz710\kdrpe\commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -10,24 +10,26 @@ use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 
-use Terpz710\KDRPE\API\FloatingKDRAPI;
-use Terpz710\KDRPE\Main;
+use terpz710\kdrpe\utils\FloatingText;
+use terpz710\kdrpe\Main;
 
 class TopKillFTCommand extends Command implements PluginOwned {
 
     private $plugin;
+    private $kdrManager;
 
-    public function __construct(Main $plugin) {
+    public function __construct() {
         parent::__construct('topkillfloatingtext', 'Show Top Kill leaderboard as Floating Text', '/topkillfloatingtext', ["topkillft", "tkft", "kdrft"]);
         $this->setPermission('kdrpe.command.topkillft');
-        $this->plugin = $plugin;
+        $this->plugin = Main::getInstance();
+        $this->kdrManager = Main::getInstance()->getKdrManager();
     }
 
-    public function getOwningPlugin(): Plugin {
+    public function getOwningPlugin() : Plugin{
         return $this->plugin;
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
         if (!$sender instanceof Player) {
             $sender->sendMessage('This command can only be used in-game!');
             return true;
@@ -37,7 +39,7 @@ class TopKillFTCommand extends Command implements PluginOwned {
             return true;
         }
 
-        $topKillData = $this->plugin->getTopKills();
+        $topKillData = $this->kdrManager->getTopKills();
 
         $text = "-----------§eTOP KILLS§f-----------\n";
         $position = $sender->getPosition();
@@ -53,8 +55,8 @@ class TopKillFTCommand extends Command implements PluginOwned {
         }
         
         $tag = 'topkill';
-        FloatingKDRAPI::create($position, $tag, $text);
-        FloatingKDRAPI::saveToFile(Main::getInstance()->getDataFolder());
+        FloatingText::create($position, $tag, $text);
+        FloatingText::saveToFile($this->plugin->getDataFolder());
         $sender->sendMessage('§l§a[!]§r§f Top Kill leaderboard Floating Text created!');
         return true;
     }
