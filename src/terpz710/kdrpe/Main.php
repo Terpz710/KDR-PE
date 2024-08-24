@@ -43,23 +43,13 @@ class Main extends PluginBase {
 
         $kdrFolderPath = $this->getDataFolder() . 'KDR';
         if (!is_dir($kdrFolderPath)) {
-        @mkdir($kdrFolderPath);
+            @mkdir($kdrFolderPath);
         }
-
-        $dataPath = $kdrFolderPath . DIRECTORY_SEPARATOR . 'data.json';
-        if (!file_exists($dataPath)) {
-            $initialData = [];
-            file_put_contents($dataPath, json_encode($initialData, JSON_PRETTY_PRINT));
-        }
-
-        $ftDataPath = $this->getDataFolder() . DIRECTORY_SEPARATOR . 'floating_text_data.json';
-        if (!file_exists($ftDataPath)) {
-            $initialData = [];
-            file_put_contents($ftDataPath, json_encode($initialData, JSON_PRETTY_PRINT));
-        }
+        $this->kdrManager->loadPlayerData();
     }
 
     protected function onDisable() : void{
+        $this->kdrManager->savePlayerData();
         FloatingText::saveFile();
     }
 
