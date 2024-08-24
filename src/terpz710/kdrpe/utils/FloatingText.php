@@ -11,8 +11,9 @@ use pocketmine\utils\Config;
 
 use terpz710\kdrpe\Main;
 
-class FloatingText{
-    public static array $floatingText = [];
+class FloatingText {
+    private static array $floatingText = [];
+    private static array $cachedData = [];
 
     public static function create(Position $position, string $tag, string $text): void {
         $world = $position->getWorld();
@@ -27,6 +28,11 @@ class FloatingText{
                 }
 
                 self::$floatingText[$tag] = [$position, $floatingText];
+                self::$cachedData[$tag] = [
+                    "text" => $text,
+                    "position" => $position
+                ];
+
                 $world->addParticle($position, $floatingText, $world->getPlayers());
                 self::saveToFile(Main::getInstance()->getDataFolder());
             } else {
@@ -44,6 +50,7 @@ class FloatingText{
         self::$floatingText[$tag][1] = $floatingText;
         self::$floatingText[$tag][0]->getWorld()->addParticle(self::$floatingText[$tag][0], $floatingText, self::$floatingText[$tag][0]->getWorld()->getPlayers());
         unset(self::$floatingText[$tag]);
+        unset(self::$cachedData[$tag]);
         self::saveToFile(Main::getInstance()->getDataFolder());
     }
 
@@ -54,6 +61,7 @@ class FloatingText{
         $floatingText = self::$floatingText[$tag][1];
         $floatingText->setText(str_replace("{line}", "\n", $text));
         self::$floatingText[$tag][1] = $floatingText;
+        self::$cachedData[$tag]['text'] = $text;
         self::$floatingText[$tag][0]->getWorld()->addParticle(self::$floatingText[$tag][0], $floatingText, self::$floatingText[$tag][0]->getWorld()->getPlayers());
         self::saveToFile(Main::getInstance()->getDataFolder());
     }
@@ -78,6 +86,10 @@ class FloatingText{
                     $chunk = $world->getOrLoadChunkAtPosition($position);
                     if ($chunk !== null) {
                         self::create($position, $tag, $textData["text"]);
+                        self::$cachedData[$tag] = [
+                            "text" => $textData["text"],
+                            "position" => $position
+                        ];
                     } else {
                         Server::getInstance()->getLogger()->warning("Chunk not loaded for floating text with tag '$tag'.");
                     }
@@ -107,5 +119,9 @@ class FloatingText{
 
     public static function saveFile(): string {
         return json_encode(self::$floatingText, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public static function getCachedData(): array {
+        return self::$cachedData;
     }
 }
