@@ -25,7 +25,7 @@ class KdrEvent implements Listener {
 
     private $kdrManager;
     private $scoreHud;
-    public static array $floatingText = [];
+    private static array $floatingText = [];
 
     public function __construct() {
         $this->kdrManager = Main::getInstance()->getKdrManager();
