@@ -12,7 +12,7 @@ use pocketmine\utils\Config;
 use terpz710\kdrpe\Main;
 
 class FloatingText {
-    private static array $floatingText = [];
+    protected static array $floatingText = [];
     private static array $cachedData = [];
 
     public static function create(Position $position, string $tag, string $text): void {
