@@ -6,125 +6,77 @@ namespace terpz710\kdrpe\utils;
 
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
-
 use terpz710\kdrpe\Main;
-
-use terpz710\kdrpe\utils\KdrScoreHud;
 
 class KdrManager {
 
     private $killStreakConfig;
     private array $killStreaks = [];
+    private array $playerDataCache = [];
     private $plugin;
     private $scoreHud;
+    private $dataPath;
 
     public function __construct() {
         $this->plugin = Main::getInstance();
+        $this->dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
         $this->loadKillStreakData();
+    }
+
+    public function loadPlayerData(): void {
+        if (file_exists($this->dataPath)) {
+            $this->playerDataCache = json_decode(file_get_contents($this->dataPath), true);
+        }
+    }
+
+    public function savePlayerData(): void {
+        file_put_contents($this->dataPath, json_encode($this->playerDataCache, JSON_PRETTY_PRINT));
     }
 
     public function initializePlayerData(string $playerName): void {
         $this->scoreHud = new KdrScoreHud();
-        $dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
-        $playerData = json_decode(file_get_contents($dataPath), true);
-
-        if (!isset($playerData[$playerName])) {
-            $playerData[$playerName] = ['kills' => 0, 'deaths' => 0];
-            file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
+        if (!isset($this->playerDataCache[$playerName])) {
+            $this->playerDataCache[$playerName] = ['kills' => 0, 'deaths' => 0];
+            $this->savePlayerData();
             $this->scoreHud->updateScoreHudTags($this->plugin->getServer()->getPlayerExact($playerName));
         }
     }
 
     public function incrementKill(string $playerName): void {
-        $dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
-        $playerData = json_decode(file_get_contents($dataPath), true);
-
-        $playerData[$playerName]['kills']++;
-        file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
+        $this->playerDataCache[$playerName]['kills']++;
+        $this->savePlayerData();
     }
 
     public function incrementDeath(string $playerName): void {
-        $dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
-        $playerData = json_decode(file_get_contents($dataPath), true);
-
-        $playerData[$playerName]['deaths']++;
-        file_put_contents($dataPath, json_encode($playerData, JSON_PRETTY_PRINT));
-    }
-
-    public function updateFloatingText() {
-        $filePath = $this->plugin->getDataFolder() . "floating_text_data.json";
-        $text = $this->getFloatingText();
-        FloatingText::update($text, $filePath);
-    }
-
-    public function getFloatingText(): string {
-        $topKillData = $this->getTopKills();
-
-        $text = "-----------§eTOP KILLS§f-----------\n";
-
-        $rank = 1;
-        foreach ($topKillData as $playerName => $kills) {
-            $text .= "§e{$rank}. §f{$playerName}: §e{$kills}\n";
-            $rank++;
-
-            if ($rank > 10) {
-                break;
-            }
-        }
-
-        return $text;
+        $this->playerDataCache[$playerName]['deaths']++;
+        $this->savePlayerData();
     }
 
     public function getKills(string $playerName): int {
-        $playerData = $this->getPlayerData();
-
-        return $playerData[$playerName]['kills'] ?? 0;
+        return $this->playerDataCache[$playerName]['kills'] ?? 0;
     }
 
     public function getDeaths(string $playerName): int {
-        $playerData = $this->getPlayerData();
-
-        return $playerData[$playerName]['deaths'] ?? 0;
+        return $this->playerDataCache[$playerName]['deaths'] ?? 0;
     }
 
     public function getPlayerData(): array {
-        $dataPath = $this->plugin->getDataFolder() . 'KDR' . DIRECTORY_SEPARATOR . 'data.json';
-        $playerData = json_decode(file_get_contents($dataPath), true);
-
-        return $playerData ?? [];
+        return $this->playerDataCache;
     }
 
     public function getTopKills(): array {
-        $playerData = $this->getPlayerData();
         $topKills = [];
-
-        foreach ($playerData as $playerName => $data) {
+        foreach ($this->playerDataCache as $playerName => $data) {
             $kills = $data['kills'] ?? 0;
             $topKills[$playerName] = $kills;
         }
-
         arsort($topKills);
-
         return array_slice($topKills, 0, 10);
     }
 
     private function loadKillStreakData(): void {
         $this->killStreakConfig = new Config($this->plugin->getDataFolder() . 'killstreak.json', Config::JSON, []);
         $this->killStreaks = $this->killStreakConfig->getAll();
-    }
-
-    public function getKillStreak(string $playerName): int {
-        return $this->killStreaks[$playerName] ?? 0;
-    }
-
-    public function resetKillStreak(string $playerName): void {
-        unset($this->killStreaks[$playerName]);
-    }
-
-    public function handleKillStreak(string $playerName, int $killStreak): void {
-        if ($killStreak >= 5) {
-            $this->plugin->getServer()->broadcastMessage("{$playerName} is on a {$killStreak}-kill streak!");
-        }
     }
 
     public function saveKillStreakData(): void {
