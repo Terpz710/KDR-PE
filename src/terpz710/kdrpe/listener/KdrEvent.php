@@ -35,11 +35,11 @@ class KdrEvent implements Listener {
     }
 
     public function onChunkUnload(ChunkUnloadEvent $event) {
-        FloatingText::saveToFile();
+        FloatingText::saveToFile(Main::getInstance()->getDataFolder());
     }
 
     public function onWorldUnload(WorldUnloadEvent $event) {
-        FloatingText::saveToFile();
+        FloatingText::saveToFile(Main::getInstance()->getDataFolder());
     }
 
     public function onEntityTeleport(EntityTeleportEvent $event) {
