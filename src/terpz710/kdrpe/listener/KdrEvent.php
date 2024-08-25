@@ -24,7 +24,7 @@ use terpz710\kdrpe\Main;
 class KdrEvent implements Listener {
 
     private $kdrManager;
-    private $scoreHud;
+    public $scoreHud;
 
     public function __construct() {
         $this->kdrManager = Main::getInstance()->getKdrManager();
