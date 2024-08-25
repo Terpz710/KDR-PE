@@ -40,17 +40,11 @@ class Main extends PluginBase {
         ]);
 
         $this->getServer()->getPluginManager()->registerEvents(new KdrEvent(), $this);
-
-        $kdrFolderPath = $this->getDataFolder() . 'KDR';
-        if (!is_dir($kdrFolderPath)) {
-            @mkdir($kdrFolderPath);
-        }
-        $this->kdrManager->loadPlayerData();
     }
 
     protected function onDisable() : void{
-        $this->kdrManager->savePlayerData();
-        FloatingText::saveFile();
+        $this->kdrManager->saveAllData();
+        FloatingText::saveToFile($this->getDataFolder());
     }
 
     public static function getInstance() : self{
