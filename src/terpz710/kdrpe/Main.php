@@ -44,7 +44,7 @@ class Main extends PluginBase {
 
     protected function onDisable() : void{
         $this->kdrManager->saveAllData();
-        FloatingText::saveToFile($this->getDataFolder());
+        FloatingText::saveFile();
     }
 
     public static function getInstance() : self{
