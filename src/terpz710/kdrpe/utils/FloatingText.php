@@ -12,8 +12,8 @@ use pocketmine\utils\Config;
 use terpz710\kdrpe\Main;
 
 class FloatingText {
-    private static array $floatingText = [];
-    private static array $cachedData = [];
+    public static array $floatingText = [];
+    public static array $cachedData = [];
 
     public static function create(Position $position, string $tag, string $text): void {
         $world = $position->getWorld();
