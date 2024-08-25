@@ -87,10 +87,11 @@ class KdrEvent implements Listener {
         $this->kdrManager->saveKillStreakData();
     }
 
-    public function onPlayerJoin(PlayerJoinEvent $event) {
+    public function onPlayerJoin(PlayerJoinEvent $event): void {
         $player = $event->getPlayer();
         $this->scoreHud = new KdrScoreHud();
         $this->kdrManager->initializePlayerData($player->getName());
+        $this->kdrManager->initializeKillStreak($player->getName());
         $this->scoreHud->updateScoreHudTags($player);
     }
 }
