@@ -74,6 +74,30 @@ class KdrManager {
         return array_slice($topKills, 0, 10);
     }
 
+    public function updateFloatingText() {
+        $filePath = $this->plugin->getDataFolder() . "floating_text_data.json";
+        $text = $this->getFloatingText();
+        FloatingText::update($text, $filePath);
+    }
+
+    public function getFloatingText(): string {
+        $topKillData = $this->getTopKills();
+
+        $text = "-----------§eTOP KILLS§f-----------\n";
+
+        $rank = 1;
+        foreach ($topKillData as $playerName => $kills) {
+            $text .= "§e{$rank}. §f{$playerName}: §e{$kills}\n";
+            $rank++;
+
+            if ($rank > 10) {
+                break;
+            }
+        }
+
+        return $text;
+    }
+
     public function getKillStreak(string $playerName): int {
         return $this->killStreaks[$playerName] ?? 0;
     }
