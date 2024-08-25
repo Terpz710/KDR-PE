@@ -38,6 +38,14 @@ class KdrManager {
         }
     }
 
+    public function initializeKillStreak(string $playerName): void {
+        if (!isset($this->killStreaks[$playerName])) {
+            $this->killStreaks[$playerName] = 0;
+            $this->saveKillStreakData();
+        }
+    }
+
+
     public function incrementKill(string $playerName): void {
         $this->playerDataCache[$playerName]['kills']++;
     }
