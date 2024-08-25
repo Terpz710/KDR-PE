@@ -35,11 +35,11 @@ class KdrEvent implements Listener {
     }
 
     public function onChunkUnload(ChunkUnloadEvent $event) {
-        FloatingText::saveFile();
+        FloatingText::saveToFile();
     }
 
     public function onWorldUnload(WorldUnloadEvent $event) {
-        FloatingText::saveFile();
+        FloatingText::saveToFile();
     }
 
     public function onEntityTeleport(EntityTeleportEvent $event) {
@@ -92,9 +92,5 @@ class KdrEvent implements Listener {
         $this->scoreHud = new KdrScoreHud();
         $this->kdrManager->initializePlayerData($player->getName());
         $this->scoreHud->updateScoreHudTags($player);
-    }
-
-    public function onPlayerQuit(PlayerQuitEvent $event) {
-        FloatingText::saveFile();
     }
 }
