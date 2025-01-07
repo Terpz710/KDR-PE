@@ -29,7 +29,7 @@ class SeeKDRCommand extends Command implements PluginOwned {
         $this->plugin = Main::getInstance();
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
         if (!$sender instanceof Player) {
             $sender->sendMessage(TextFormat::RED . "This command can only be used in-game!");
             return false;
