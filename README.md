@@ -1,24 +1,29 @@
 <p align="center">
     <a href="https://github.com/Terpz710/KDR-PE"><img src="https://github.com/Terpz710/KDR-PE/blob/main/icon.png"></img></a><br>
-    <b>KDR-PE for Pocketmine-MP</b>
+    <b>KDR system for Pocketmine-MP</b>
 
 # Description
 
 A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system.
 
-This plugin creates a floating text leaderboard that shows off the top kills on the server as well!
+This plugin also creates a floating text leaderboards that shows off the top kills, deaths and killstreaks on the server as well!
+
+KDR-PE had a huge code rewrite on January 7, 2025
+
+This rewrite fixes 99% of the bugs from v1.0.5 rewrite....
 
 # Features 
 
 * Kill tracker
 * Death tracker
+* Killstreak tracker
 * KDR system
 * Topkill system
-* See other players KDRS
-* Killstreak tracker
-* See other players killstreak
+* TopDeath system
+* TopKillStreak system
+* See other players kills, deaths, killstreak and KDRS
 * Scorehud support
-* CREATE A TOP KILL LEADERBOARD(Floating Text).
+* CREATE A TOP KILL/DEATH/KILLSTREAK LEADERBOARD(Floating Text).
 
 ## ScoreHud Tags
 
@@ -30,53 +35,91 @@ This plugin creates a floating text leaderboard that shows off the top kills on 
 Link to his plugin: [ScoreHud](https://github.com/Ifera/ScoreHud)
 
 # Permissions/Commands
-```
 
 **KDR Command**
-
+```
 Command: /kdr
 
-Permission: kdr-pe.command.kdr
+Aliases: NONE
+
+Permission: kdrpe.kdr
 
 defualt: true
+```
 
 **SeeKDR Command**
-
+```
 Command: /seekdr
 
-Permission: kdr-pe.command.seekdr
+Aliases: NONE
+
+Permission: kdrpe.seekdr
 
 default: true
-
-**Killstreak Command**
-
-Command: /killstreak
-
-Permission: kdr-pe.command.killstreak
-
-default: true
-
-**SeeKillStreak Command**
-
-Command: /seekillstreak
-
-Permission: kdr-pe.command.seekillstreak
-
-default: true
+```
 
 **TopKill Command**
-
+```
 Command: /topkill
 
-Permission: kdr-pe.command.topkill
+Aliases: /topkills, /tk
+
+Permission: kdrpe.topkill
 
 default: true
+```
 
-**TopKillFloatingText Command**
+**TopDeath Command**
+```
+Command: /topdeath
 
-Command: /topkillfloatingtext
+Aliases: /topdeaths, /td
 
-Permission: kdr-pe.command.topkillft
+Permission: kdrpe.topdeath
+
+default: true
+```
+
+**TopKillStreak Command**
+```
+Command: /topkillstreak
+
+Aliases: /topkillstreaks, /tks
+
+Permission: kdrpe.topkillstreak
+
+default: true
+```
+
+**KillLeaderboard Command**
+```
+Command: /killleaderboard
+
+Aliases: /killlb, /klb
+
+Permission: kdrpe.killleaderboard
+
+default: op
+```
+
+**DeathLeaderboard Command**
+```
+Command: /deathleaderboard
+
+Aliases: /deathlb, /dlb
+
+Permission: kdrpe.deathleaderboard
+
+default: op
+```
+
+**KillStreakLeaderboard Command**
+```
+Command: /killstreakleaderboard
+
+Aliases: /killstreaklb, /kslb
+
+Permission: kdrpe.killstreakleaderboard
 
 default: op
 ```
