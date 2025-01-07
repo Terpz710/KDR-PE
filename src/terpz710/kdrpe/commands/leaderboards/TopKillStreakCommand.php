@@ -39,14 +39,14 @@ class TopKillStreakCommand extends Command implements PluginOwned {
 
         $this->plugin->getKDRManager()->data->reload();
         $killstreakLeaderboard = KillStreakLeaderboard::getInstance()->getTopKillStreak();
-        $sender->sendMessage("§l§a===== Top KillStreak Leaderboard =====");
+        $sender->sendMessage("§l§b===== Top KillStreak Leaderboard =====");
 
         $rank = 1;
         foreach ($killstreakLeaderboard as $username => $killstreak) {
             $sender->sendMessage("§e{$rank}. {$username} - {$killstreak} killstreak");
             $rank++;
         }
-        $sender->sendMessage("§l§a===================================");
+        $sender->sendMessage("§l§b===================================");
         return true;
     }
 
