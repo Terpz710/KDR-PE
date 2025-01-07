@@ -29,7 +29,7 @@ class SeeKDRCommand extends Command implements PluginOwned {
         $this->plugin = Main::getInstance();
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
+    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) {
             $sender->sendMessage(TextFormat::RED . "This command can only be used in-game!");
             return false;
@@ -40,25 +40,31 @@ class SeeKDRCommand extends Command implements PluginOwned {
             return false;
         }
 
-        $targetPlayer = $sender->getServer()->getPlayerByPrefix($args[0]);
-
+        $targetName = $args[0];
         $kdrManager = Main::getInstance()->getKDRManager();
 
-        if (!$kdrManager->hasKDRProfile($targetPlayer)) {
-            $sender->sendMessage(TextFormat::RED . $args[0] . " does not exist!");
+        $uuid = null;
+        foreach ($kdrManager->data->getAll() as $storedUuid => $data) {
+            if ($data["username"] === $targetName) {
+                $uuid = $storedUuid;
+                break;
+            }
+        }
+
+        if ($uuid === null) {
+            $sender->sendMessage(TextFormat::RED . $targetName . " does not exist!");
             return false;
         }
 
-        $kills = $kdrManager->getKills($targetPlayer);
-        $deaths = $kdrManager->getDeaths($targetPlayer);
-        $kdr = $kdrManager->getKDR($targetPlayer);
-        $killstreak = $kdrManager->getKillStreak($targetPlayer);
-        $name = $targetPlayer->getName();
+        $kills = $kdrManager->data->get($uuid)["kills"];
+        $deaths = $kdrManager->data->get($uuid)["deaths"];
+        $killstreak = $kdrManager->data->get($uuid)["killstreak"];
+        $kdr = ($deaths === 0) ? $kills : round($kills / $deaths, 2);
 
-        $sender->sendMessage("§l=====§e {$name}'s KDR stats §f=====");
+        $sender->sendMessage("§l=====§e {$targetName}'s KDR stats §f=====");
         $sender->sendMessage("kills:§e $kills");
         $sender->sendMessage("deaths:§e $deaths");
-        $sender->sendMessage("killstreal:§e $killstreak");
+        $sender->sendMessage("killstreak:§e $killstreak");
         $sender->sendMessage("KDR:§e $kdr");
         $sender->sendMessage("§l===========================");
         return true;
