@@ -21,12 +21,19 @@ use terpz710\kdrpe\scorehud\KDRScoreHud;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
+use terpz710\kdrpe\leaderboards\KillLeaderboard;
+use terpz710\kdrpe\leaderboards\DeathLeaderboard;
+use terpz710\kdrpe\leaderboards\KillStreakLeaderboard;
+
 final class Main extends PluginBase {
 
     protected static self $instance;
     
     public KDRManager $manager;
     public KDRScoreHud $scorehud;
+    public KillLeaderboard $killLB;
+    public DeathLeaderboard $deathLB;
+    public KillStreakLeaderboard $killstreakLB;
 
     protected function onLoad() : void{ 
         self::$instance = $this;
@@ -48,6 +55,9 @@ final class Main extends PluginBase {
 
         $this->manager = new KDRManager();
         $this->scorehud = new KDRScoreHud();
+        $this->killLB = new KillLeaderboard();
+        $this->deathLB = new DeathLeaderboard();
+        $this->killstreakLB = new KillStreakLeaderboard();
     }
 
     protected function onDisable() : void{
@@ -64,5 +74,17 @@ final class Main extends PluginBase {
 
     public function getKDRScoreHud() : KDRScoreHud{ 
         return $this->scorehud; 
+    }
+
+    public function getKillLeaderboard() : KillLeaderboard{
+        return $this->killLB;
+    }
+
+    public function getDeathLeaderboard() : DeathLeaderboard{
+        return $this->deathLB;
+    }
+
+    public function getKillStreakLeaderboard() : KillStreakLeaderboard{
+        return $this->killstreakLB;
     }
 }
