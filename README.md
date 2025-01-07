@@ -12,6 +12,9 @@ KDR-PE had a huge code rewrite on January 7, 2025
 
 This rewrite fixes 99% of the bugs from v1.0.5 rewrite....
 
+**Note:**
+Theres a bug where the floatingtext leaderboard shows an empty leaderboard, to fix this just type the command again.
+
 # Features 
 
 * Kill tracker
