@@ -43,7 +43,7 @@ class KillStreakLeaderboardCommand extends Command implements PluginOwned {
 
         $position = $sender->getPosition();
         $killStreakLeaderboard = KillStreakLeaderboard::getInstance()->getTopKillStreak();
-        $text = "§l§a-=Top KillStreak Leaderboard=-\n";
+        $text = "§l§b-=Top KillStreak Leaderboard=-\n";
 
         $rank = 1;
         foreach ($killStreakLeaderboard as $username => $killstreak) {
