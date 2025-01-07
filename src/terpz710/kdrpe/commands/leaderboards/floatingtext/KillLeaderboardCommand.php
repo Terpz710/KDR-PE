@@ -41,6 +41,8 @@ class KillLeaderboardCommand extends Command implements PluginOwned {
             return false;
         }
 
+        $this->plugin->getKDRManager()->data->reload();
+
         $position = $sender->getPosition();
         $killLeaderboard = KillLeaderboard::getInstance()->getTopKillers();
         $text = "§l§a-=Top Kills Leaderboard=-\n";
