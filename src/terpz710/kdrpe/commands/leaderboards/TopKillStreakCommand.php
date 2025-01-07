@@ -37,6 +37,7 @@ class TopKillStreakCommand extends Command implements PluginOwned {
             return false;
         }
 
+        $this->plugin->getKDRManager()->data->reload();
         $killstreakLeaderboard = KillStreakLeaderboard::getInstance()->getTopKillStreak();
         $sender->sendMessage("§l§a===== Top KillStreak Leaderboard =====");
 
