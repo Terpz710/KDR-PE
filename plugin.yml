@@ -1,28 +1,27 @@
 name: KDR-PE
-version: 1.0.5
+version: 1.0.6
 author: Terpz710
 authors: ["WavyCraft"]
 api: 5.0.0
 main: terpz710\kdrpe\Main
 description: A KDR system.
+
 softdepend: ScoreHud
 
 permissions:
-  kdr-pe.command.kdr:
-    description: Allows the player to see their KDR.
+  kdrpe.kdr:
     default: true
-  kdr-pe.command.seekdr:
-    description: Allows the player to see other players KDR.
+  kdrpe.seekdr:
     default: true
-  kdr-pe.command.topkill:
-    description: Allows the player to see the top kills.
+  kdrpe.topkill:
     default: true
-  kdrpe.command.killstreak:
-    description: Allows the player to see their kill streak.
+  kdrpe.topdeath:
     default: true
-  kdrpe.command.seekillstreak:
-    description: Allows the player to see other players kill streak.
+  kdrpe.topkillstreak:
     default: true
-  kdrpe.command.topkillft:
-    description: Allows the OP to add/remove the top kill floating text.
+  kdrpe.killleaderboard:
+    default: op
+  kdrpe.deathleaderboard:
+    default: op
+  kdrpe.killstreakleaderboard:
     default: op
