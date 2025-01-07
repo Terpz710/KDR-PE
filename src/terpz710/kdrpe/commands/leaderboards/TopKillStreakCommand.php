@@ -45,7 +45,7 @@ class TopKillStreakCommand extends Command implements PluginOwned {
             $sender->sendMessage("§e{$rank}. {$username} - {$killstreak} killstreak");
             $rank++;
         }
-        $sender->sendMessage("§l§a===============================");
+        $sender->sendMessage("§l§a===================================");
         return true;
     }
 
