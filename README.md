@@ -4,7 +4,7 @@
 
 # Description
 
-A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system.
+A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system, See all the features below!
 
 This plugin also creates a floating text leaderboards that shows off the top kills, deaths and killstreaks on the server as well!
 
