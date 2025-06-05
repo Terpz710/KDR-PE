@@ -85,7 +85,7 @@ class EventListener implements Listener {
         $player = $event->getPlayer();
         $tag = $event->getTag();
         $manager = Main::getInstance()->getKDRManager();
-        $kills = $manager->getKills($player->getName());
+        $kills = $manager->getKills($player);
         $deaths = $manager->getDeaths($player);
         $kdr = $manager->getKDR($player);
         $killstreak = $manager->getKillStreak($player);
