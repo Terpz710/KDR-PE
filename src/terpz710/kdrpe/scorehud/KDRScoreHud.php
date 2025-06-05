@@ -10,7 +10,6 @@ use terpz710\kdrpe\Main;
 
 use Ifera\ScoreHud\ScoreHud;
 use Ifera\ScoreHud\scoreboard\ScoreTag;
-use Ifera\ScoreHud\event\TagsResolveEvent;
 use Ifera\ScoreHud\event\PlayerTagsUpdateEvent;
 
 class KDRScoreHud {
@@ -39,22 +38,5 @@ class KDRScoreHud {
             );
             $ev->call();
         }
-    }
-
-    public function onTagResolve(TagsResolveEvent $event) {
-        $player = $event->getPlayer();
-        $tag = $event->getTag();
-        $kills = $this->kdrManager->getKills($player->getName());
-        $deaths = $this->kdrManager->getDeaths($player);
-        $kdr = $this->kdrManager->getKDR($player);
-        $killstreak = $this->kdrManager->getKillStreak($player);
-
-        match ($tag->getName()) {
-            "kdrpe.kills" => $tag->setValue((string)$kills),
-            "kdrpe.deaths" => $tag->setValue((string)$deaths),
-            "kdrpe.kdr" => $tag->setValue((string)$kdr),
-            "kdrpe.killstreak" => $tag->setValue((string)$killstreak),
-            default => null,
-        };
     }
 }
