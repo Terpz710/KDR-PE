@@ -17,6 +17,8 @@ use pocketmine\player\Player;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
+use Ifera\ScoreHud\event\TagsResolveEvent;
+
 class EventListener implements Listener {
 
     public function join(PlayerJoinEvent $event) : void{
@@ -64,9 +66,6 @@ class EventListener implements Listener {
 
     public function teleport(EntityTeleportEvent $event) {
         $entity = $event->getEntity();
-        $scorehud = Main::getInstance()->getKDRScoreHud();
-
-        $scorehud->updateTag($entity);
         
         if ($entity instanceof Player) {
             $fromWorld = $event->getFrom()->getWorld();
@@ -80,5 +79,23 @@ class EventListener implements Listener {
                 }
             }
         }
+    }
+
+    public function onTagResolve(TagsResolveEvent $event) {
+        $player = $event->getPlayer();
+        $tag = $event->getTag();
+        $manager = Main::getInstance()->getKDRManager();
+        $kills = $manager->getKills($player->getName());
+        $deaths = $manager->getDeaths($player);
+        $kdr = $manager->getKDR($player);
+        $killstreak = $manager->getKillStreak($player);
+
+        match ($tag->getName()) {
+            "kdrpe.kills" => $tag->setValue((string)$kills),
+            "kdrpe.deaths" => $tag->setValue((string)$deaths),
+            "kdrpe.kdr" => $tag->setValue((string)$kdr),
+            "kdrpe.killstreak" => $tag->setValue((string)$killstreak),
+            default => null,
+        };
     }
 }
