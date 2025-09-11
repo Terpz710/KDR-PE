@@ -33,7 +33,7 @@ class EventListener implements Listener {
 
     public function join(PlayerJoinEvent $event) : void{
         $player = $event->getPlayer();
-        $kdr = KDRSavedData::getInstance();
+        $kdr = KDR::getInstance();
 
         if(!$kdr->hasAccount($player)){
             $kdr->createAccount($player);
