@@ -11,11 +11,6 @@ use pocketmine\utils\SingletonTrait;
 
 use terpz710\kdrpe\Main;
 
-use terpz710\kdrpe\event\AddKillEvent;
-use terpz710\kdrpe\event\AddKillStreakEvent;
-use terpz710\kdrpe\event\ResetKillStreakEvent;
-use terpz710\kdrpe\event\AddDeathEvent;
-
 final class KDR {
     use SingletonTrait;
 
@@ -29,7 +24,7 @@ final class KDR {
     }
 
     public function hasAccount($player) : bool{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
@@ -39,7 +34,7 @@ final class KDR {
     }
 
     public function createAccount($player) : void{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
@@ -56,20 +51,17 @@ final class KDR {
     }
 
     public function addKill($player) : void{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
         $player = $player;
 
-        if (!$this->hasAccount($player)) {
+        if(!$this->hasAccount($player)){
             return;
         }
 
         $data = $this->config->get($player);
-
-        $e = new AddKillEvent($player);
-        $e->call();
 
         $data["kills"] += 1;
         $this->config->set($player, $data);
@@ -77,20 +69,17 @@ final class KDR {
     }
 
     public function addKillStreak($player) : void{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
         $player = $player;
 
-        if (!$this->hasAccount($player)) {
+        if(!$this->hasAccount($player)){
             return;
         }
 
         $data = $this->config->get($player);
-
-        $e = new AddKillStreakEvent($player);
-        $e->call();
 
         $data["kill_streak"] += 1;
         $this->config->set($player, $data);
@@ -98,20 +87,17 @@ final class KDR {
     }
 
     public function resetKillStreak($player) : void{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
         $player = $player;
 
-        if (!$this->hasAccount($player)) {
+        if(!$this->hasAccount($player)){
             return;
         }
 
         $data = $this->config->get($player);
-
-        $e = new ResetKillStreakEvent($player);
-        $e->call();
 
         $data["kill_streak"] = 0;
         $this->config->set($player, $data);
@@ -119,20 +105,17 @@ final class KDR {
     }
 
     public function addDeath($player) : void{
-        if ($player instanceof Player) {
+        if($player instanceof Player){
             $player = $player->getName();
         }
 
         $player = $player;
 
-        if (!$this->hasAccount($player)) {
+        if(!$this->hasAccount($player)){
             return;
         }
 
         $data = $this->config->get($player);
-
-        $e = new AddDeathEvent($player);
-        $e->call();
 
         $data["deaths"] += 1;
         $this->config->set($player, $data);
