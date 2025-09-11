@@ -26,6 +26,8 @@ use terpz710\kdrpe\scoreboard\KDRScoreboard;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
+use Ifera\ScoreHud\event\TagsResolveEvent;
+
 class EventListener implements Listener {
 
     public function join(PlayerJoinEvent $event) : void{
