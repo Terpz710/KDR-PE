@@ -49,13 +49,19 @@ class EventListener implements Listener {
             $damager = $cause->getDamager();
 
             if($damager instanceof Player){
-                $kdr->addKill($damager);
-                $kdr->addKillStreak($damager);
+                $add_kill_e = new AddKillEvent($damager->getName());
+                $add_kill_streak_e = new AddKillStreakEvent($damager->getName());
+                
+                $add_kill_e->call();
+                $add_kill_streak_e->call();
             }
         }
 
-        $kdr->addDeath($player);
-        $kdr->resetKillStreak($player);
+        $add_death_e = new AddDeathEvent($player->getName());
+        $reset_kill_streak_e = new ResetKillStreakEvent($player->getName());
+
+        $add_death_e->call();
+        $reset_kill_streak_e->call();
     }
 
     public function chunkLoad(ChunkLoadEvent $event) {
@@ -110,23 +116,33 @@ class EventListener implements Listener {
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
+        $kdr = KDR::getInstance()->addKill($name);
+
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
+
+        $player->sendMessage("Ive been fired up");
     }
 
     public function addDeath(AddDeathEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
+        $kdr = KDR::getInstance()->addDeath($name);
+
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
+
+        $player->sendMessage("Ive been fired up!");
     }
 
     public function killStreak(AddKillStreakEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
+
+        $kdr = KDR::getInstance()->addKillStreak($name);
 
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
@@ -137,8 +153,12 @@ class EventListener implements Listener {
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
+        $kdr = KDR::getInstance()->resetKillStreak($name);
+
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
+
+        $player->sendMessage("Ive been fired up");
     }
 }
