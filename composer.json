@@ -1,7 +1,7 @@
 {
     "name": "terpz710/kdr-pe",
     "type": "project",
-    "license": "GNU General Public License v3.0",
+    "license": "Apache License 2.0",
     "require": {
         "pocketmine/pocketmine-mp": "^5.0.0",
         "terpz710/commando": "*"
