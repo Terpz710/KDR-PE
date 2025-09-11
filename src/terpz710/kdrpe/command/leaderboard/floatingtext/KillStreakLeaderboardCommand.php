@@ -10,6 +10,7 @@ use pocketmine\player\Player;
 
 use terpz710\kdrpe\data\saved\KDRSavedData;
 
+use terpz710\kdrpe\floatingtext\FloatingText;
 use terpz710\kdrpe\floatingtext\leaderboard\KillStreakLeaderboard;
 
 use CortexPE\Commando\BaseCommand;
