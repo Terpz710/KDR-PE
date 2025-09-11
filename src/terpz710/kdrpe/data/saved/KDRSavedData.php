@@ -11,7 +11,7 @@ use pocketmine\utils\SingletonTrait;
 
 use terpz710\kdrpe\Main;
 
-final class KDRSavesData {
+final class KDRSavedData {
     use SingletonTrait;
 
     protected Config $config;
