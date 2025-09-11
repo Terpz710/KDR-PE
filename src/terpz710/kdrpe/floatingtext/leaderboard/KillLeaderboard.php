@@ -13,7 +13,7 @@ use terpz710\kdrpe\floatingtext\FloatingText;
 final class KillLeaderboard {
     use SingletonTrait;
 
-    public static function getTopKillers(int $limit = 10) : array{
+    public function getTopKillers(int $limit = 10) : array{
         $accounts = KDRSavesData::getInstance()->getAllAccounts();
 
         $kills = [];
