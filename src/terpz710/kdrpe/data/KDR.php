@@ -11,6 +11,8 @@ use pocketmine\utils\SingletonTrait;
 
 use terpz710\kdrpe\Main;
 
+use terpz710\kdrpe\data\saved\KDRSavedData;
+
 final class KDR {
     use SingletonTrait;
 
@@ -57,14 +59,9 @@ final class KDR {
 
         $player = $player;
 
-        if(!$this->hasAccount($player)){
-            return;
-        }
-
-        $data = $this->config->get($player);
-
-        $data["kills"] += 1;
-        $this->config->set($player, $data);
+        $kills = KDRSavedData::getInstance()->getKills($player);
+        
+        $this->config->set($player, $kills + 1);
         $this->config->save();
     }
 
@@ -75,14 +72,9 @@ final class KDR {
 
         $player = $player;
 
-        if(!$this->hasAccount($player)){
-            return;
-        }
-
-        $data = $this->config->get($player);
-
-        $data["kill_streak"] += 1;
-        $this->config->set($player, $data);
+        $killstreak = KDRSavedData::getInstance()->getKillStreak($player);
+        
+        $this->config->set($player, $killstreak + 1);
         $this->config->save();
     }
 
@@ -91,16 +83,11 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
-        if(!$this->hasAccount($player)){
-            return;
-        }
-
-        $data = $this->config->get($player);
-
-        $data["kill_streak"] = 0;
-        $this->config->set($player, $data);
+        $this->config->set($player, [
+            "kills" => KDRSavedData::getInstance()->getKills($player),
+            "deaths" => KDRSavedData::getInstance()->getDeaths($player),
+            "kill_streak" => 0
+        ]);
         $this->config->save();
     }
 
@@ -111,14 +98,9 @@ final class KDR {
 
         $player = $player;
 
-        if(!$this->hasAccount($player)){
-            return;
-        }
-
-        $data = $this->config->get($player);
-
-        $data["deaths"] += 1;
-        $this->config->set($player, $data);
+        $deaths = KDRSavedData::getInstance()->getDeaths($player);
+        
+        $this->config->set($player, $deaths + 1);
         $this->config->save();
     }
 }
