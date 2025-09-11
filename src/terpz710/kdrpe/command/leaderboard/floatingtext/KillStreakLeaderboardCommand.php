@@ -28,7 +28,7 @@ class KillStreakLeaderboardCommand extends BaseCommand {
         }
 
         $position = $sender->getPosition();
-        $killstreak_eaderboard = KillStreakLeaderboard::getInstance()->getTopKillStreak();
+        $killstreak_leaderboard = KillStreakLeaderboard::getInstance()->getTopKillStreak();
         $text = "§l§b-=Top KillStreak Leaderboard=-\n";
 
         $rank = 1;
