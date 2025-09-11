@@ -46,7 +46,7 @@ final class KDR {
         $player = $player;
 
         if (!$this->hasAccount($player)) {
-            $this->data->set($player, [
+            $this->config->set($player, [
                 "kills" => 0,
                 "deaths" => 0,
                 "kill_streak" => 0
