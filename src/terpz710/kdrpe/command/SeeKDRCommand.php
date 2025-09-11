@@ -13,7 +13,7 @@ use terpz710\kdrpe\data\saved\KDRSavedData;
 use CortexPE\Commando\BaseCommand;
 use CortexPE\Commando\args\TargetPlayerArgument;
 
-class KDRCommand extends BaseCommand {
+class SeeKDRCommand extends BaseCommand {
 
     protected function prepare() : void{
         $this->setPermission("kdrpe.seekdr");
