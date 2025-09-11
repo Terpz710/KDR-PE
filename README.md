@@ -29,7 +29,7 @@ Theres a bug where the floatingtext leaderboard shows an empty leaderboard, to f
 * TopDeath system
 * TopKillStreak system
 * See other players kills, deaths, killstreak and KDRS
-* [Scorehud](https://github.com/Ifera/ScoreHud) support!
+* Built in [Scorehud](https://github.com/Ifera/ScoreHud) support!
 * CREATE A TOP KILL/DEATH/KILLSTREAK LEADERBOARD (Floating Text)!
 
 ## ScoreHud Tags
