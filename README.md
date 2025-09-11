@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/Terpz710/KDR-PE"><img src="https://github.com/Terpz710/KDR-PE/blob/main/icon.png"></img></a><br>
+    <a href="https://github.com/Terpz710/KDR-PE"><img src="https://github.com/Terpz710/KDR-PE/blob/stable/icon.png"></img></a><br>
     <b>KDR system for Pocketmine-MP</b>
 
 # Description
