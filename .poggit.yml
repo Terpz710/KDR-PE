@@ -1,11 +1,12 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Terpz710/KDR-PE
 build-by-default: true
 branches:
-- main
+- stable
 projects:
   KDR-PE:
     path: ""
     libs:
-      - src: jojoe77777/FormAPI/libFormAPI
-        version: ^2.1.1
+       - src: Terpz710/Commando/Commando
+         version: ^3.2.1
+    lint: false
 ...
