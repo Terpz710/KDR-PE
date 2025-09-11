@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace terpz710\kdrpe\leaderboard;
+namespace terpz710\kdrpe\floatingtext\leaderboard;
 
 use terpz710\kdrpe\data\saved\KDRSavesData;
 
