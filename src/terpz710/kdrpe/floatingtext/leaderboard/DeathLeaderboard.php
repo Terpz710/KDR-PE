@@ -14,7 +14,7 @@ final class DeathLeaderboard {
     use SingletonTrait;
 
     public function getTopDeaths(int $limit = 10) : array{
-        $accounts = KDRSavesData::getInstance()->getAllAccounts();
+        $accounts = KDRSavedData::getInstance()->getAllAccounts();
 
         $deaths = [];
         foreach ($accounts as $name => $stats) {
