@@ -6,14 +6,14 @@ namespace terpz710\kdrpe;
 
 use pocketmine\plugin\PluginBase;
 
-use terpz710\kdrpe\commands\KDRCommand;
-use terpz710\kdrpe\commands\SeeKDRCommand;
-use terpz710\kdrpe\commands\leaderboards\TopKillCommand;
-use terpz710\kdrpe\commands\leaderboards\TopDeathCommand;
-use terpz710\kdrpe\commands\leaderboards\TopKillStreakCommand;
-use terpz710\kdrpe\commands\leaderboards\floatingtext\KillLeaderboardCommand;
-use terpz710\kdrpe\commands\leaderboards\floatingtext\DeathLeaderboardCommand;
-use terpz710\kdrpe\commands\leaderboards\floatingtext\KillStreakLeaderboardCommand;
+use terpz710\kdrpe\command\KDRCommand;
+use terpz710\kdrpe\command\SeeKDRCommand;
+use terpz710\kdrpe\command\leaderboard\TopKillCommand;
+use terpz710\kdrpe\command\leaderboard\TopDeathCommand;
+use terpz710\kdrpe\command\leaderboard\TopKillStreakCommand;
+use terpz710\kdrpe\command\leaderboard\floatingtext\KillLeaderboardCommand;
+use terpz710\kdrpe\command\leaderboard\floatingtext\DeathLeaderboardCommand;
+use terpz710\kdrpe\command\leaderboard\floatingtext\KillStreakLeaderboardCommand;
 
 use CortexPE\Commando\PacketHooker;
 
