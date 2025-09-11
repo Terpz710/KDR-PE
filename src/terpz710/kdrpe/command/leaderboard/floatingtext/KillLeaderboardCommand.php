@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace terpz710\kdrpe\command\leaderboard\floatingtext;
 
-use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 
 use pocketmine\player\Player;
 
