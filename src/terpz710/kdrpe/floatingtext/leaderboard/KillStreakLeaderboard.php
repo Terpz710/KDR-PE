@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace terpz710\kdrpe\leaderboard;
+
+use terpz710\kdrpe\data\saved\KDRSavesData;
+
+use terpz710\kdrpe\floatingtext\FloatingText;
+
+final class DeathLeaderboard {
+
+    public static function getTopKillStreaks(int $limit = 10) : array{
+        $accounts = KDRSavesData::getInstance()->getAllAccounts();
+
+        $killstreak = [];
+        foreach ($accounts as $name => $stats) {
+            $killstreak[$name] = $stats["kill_streak"];
+        }
+
+        arsort($killstreak);
+
+        return array_slice($killstreak, 0, $limit, true);
+    }
+
+    public function updateKillStreakFT() : void{
+        $top_killstreak = $this->getTopKillStreaks();
+        $text = "§l§a-=Top KillStreak Leaderboard=-\n";
+
+        $rank = 1;
+        foreach ($top_killstreak as $name => $killstreak) {
+            $text .= "§r§e{$rank}. {$name} - {$killstreak} killstreak\n";
+            $rank++;
+        }
+
+        FloatingText::update("killstreak_leaderboard", $text);
+    }
+}
