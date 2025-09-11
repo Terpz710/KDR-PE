@@ -24,6 +24,8 @@ use terpz710\kdrpe\event\ResetKillStreakEvent;
 
 use terpz710\kdrpe\scoreboard\KDRScoreboard;
 
+use terpz710\kdrpe\floatingtext\FloatingText;
+
 class EventListener implements Listener {
 
     public function join(PlayerJoinEvent $event) : void{
