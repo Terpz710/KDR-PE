@@ -42,7 +42,7 @@ class EventListener implements Listener {
 
     public function death(PlayerDeathEvent $event) : void{
         $player = $event->getPlayer();
-        $kdr = KDRSavedData::getInstance();
+        $kdr = KDR::getInstance();
         $cause = $player->getLastDamageCause();
 
         if($cause instanceof EntityDamageByEntityEvent){
