@@ -2,7 +2,7 @@ name: KDR-PE
 version: 1.0.6
 author: Terpz710
 authors: ["WavyCraft"]
-api: 5.0.0
+api: 5.3.0
 main: terpz710\kdrpe\Main
 description: A KDR system.
 
