@@ -6,7 +6,7 @@ namespace terpz710\kdrpe\floatingtext\leaderboard;
 
 use pocketmine\utils\SingletonTrait;
 
-use terpz710\kdrpe\data\saved\KDRSavesData;
+use terpz710\kdrpe\data\saved\KDRSavedData;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
