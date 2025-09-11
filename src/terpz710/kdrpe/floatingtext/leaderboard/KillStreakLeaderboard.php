@@ -14,7 +14,7 @@ final class KillStreakLeaderboard {
     use SingletonTrait;
 
     public function getTopKillStreak(int $limit = 10) : array{
-        $accounts = KDRSavesData::getInstance()->getAllAccounts();
+        $accounts = KDRSavedData::getInstance()->getAllAccounts();
 
         $killstreak = [];
         foreach ($accounts as $name => $stats) {
