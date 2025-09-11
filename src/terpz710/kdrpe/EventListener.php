@@ -82,7 +82,7 @@ class EventListener implements Listener {
         }
     }
 
-    public function onTagResolve(TagsResolveEvent $event) {
+    public function tagResolve(TagsResolveEvent $event) {
         $player = $event->getPlayer();
         $tag = $event->getTag();
 
@@ -101,7 +101,7 @@ class EventListener implements Listener {
         };
     }
 
-    public function kill(AddKillEvent $event) : void{
+    public function addKill(AddKillEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
@@ -110,7 +110,7 @@ class EventListener implements Listener {
         }
     }
 
-    public function death(AddDeathEvent $event) : void{
+    public function addDeath(AddDeathEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
