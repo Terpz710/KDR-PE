@@ -14,7 +14,7 @@ final class KillLeaderboard {
     use SingletonTrait;
 
     public function getTopKillers(int $limit = 10) : array{
-        $accounts = KDRSavesData::getInstance()->getAllAccounts();
+        $accounts = KDRSavedData::getInstance()->getAllAccounts();
 
         $kills = [];
         foreach ($accounts as $name => $stats) {
