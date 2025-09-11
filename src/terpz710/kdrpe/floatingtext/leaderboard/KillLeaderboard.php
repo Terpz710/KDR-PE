@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace terpz710\kdrpe\floatingtext\leaderboard;
 
+use pocketmine\utils\SingletonTrait;
+
 use terpz710\kdrpe\data\saved\KDRSavesData;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
 final class KillLeaderboard {
+    use SingletonTrait;
 
     public static function getTopKillers(int $limit = 10) : array{
         $accounts = KDRSavesData::getInstance()->getAllAccounts();
