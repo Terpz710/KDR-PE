@@ -15,6 +15,7 @@ use pocketmine\event\world\WorldUnloadEvent;
 
 use pocketmine\Server;
 
+use terpz710\kdrpe\data\KDR;
 use terpz710\kdrpe\data\saved\KDRSavedData;
 
 use terpz710\kdrpe\event\AddKillEvent;
