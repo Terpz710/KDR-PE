@@ -33,7 +33,7 @@ final class KDRSavedData {
         }
 
         $data = $this->config->get($player);
-        return (int)($data["kills"]);
+        return (int)($data["kills"] ?? 0);
     }
 
     public function getDeaths($player) : int {
@@ -42,7 +42,7 @@ final class KDRSavedData {
         }
 
         $data = $this->config->get($player);
-        return (int)($data["deaths"]);
+        return (int)($data["deaths"] ?? 0);
     }
 
     public function getKillStreak($player) : int{
@@ -51,7 +51,7 @@ final class KDRSavedData {
         }
 
         $data = $this->config->get($player);
-        return (int)($data["kill_streak"]);
+        return (int)($data["kill_streak"] ?? 0);
     }
 
     public function getKDR($player) : float{
