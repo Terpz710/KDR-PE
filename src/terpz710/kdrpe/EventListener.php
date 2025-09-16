@@ -26,6 +26,9 @@ use terpz710\kdrpe\event\ResetKillStreakEvent;
 use terpz710\kdrpe\scoreboard\KDRScoreboard;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
+use terpz710\kdrpe\floatingtext\leaderboard\KillLeaderboard;
+use terpz710\kdrpe\floatingtext\leaderboard\DeathLeaderboard;
+use terpz710\kdrpe\floatingtext\leaderboard\KillStreakLeaderboard;
 
 use Ifera\ScoreHud\event\TagsResolveEvent;
 
@@ -116,49 +119,55 @@ class EventListener implements Listener {
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
-        $kdr = KDR::getInstance()->addKill($name);
+        KDR::getInstance()->addKill($name);
 
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
 
-        $player->sendMessage("Ive been fired up");
+        $player->sendMessage("Ive been fired up - Kill Event");
     }
 
     public function addDeath(AddDeathEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
-        $kdr = KDR::getInstance()->addDeath($name);
+        KDR::getInstance()->addDeath($name);
 
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
 
-        $player->sendMessage("Ive been fired up!");
+        $player->sendMessage("Ive been fired up - Death Event");
     }
 
     public function killStreak(AddKillStreakEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
-        $kdr = KDR::getInstance()->addKillStreak($name);
+        KDR::getInstance()->addKillStreak($name);
 
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
+
+        KillLeaderboard::getInstance()->updateKillFT();
+
+        $player->sendMessage("Ive been fired up - Add Kill Streak Event");
     }
 
     public function resetKillStreak(ResetKillStreakEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
-        $kdr = KDR::getInstance()->resetKillStreak($name);
+        KDR::getInstance()->resetKillStreak($name);
 
         if ($player !== null) {
             KDRScoreboard::updateTag($player);
         }
 
-        $player->sendMessage("Ive been fired up");
+        KillStreakLeaderboard::getInstance()->updateKillStreakFT();
+
+        $player->sendMessage("Ive been fired up - Reset Kill Streak Event");
     }
 }
