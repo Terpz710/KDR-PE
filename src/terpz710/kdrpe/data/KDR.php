@@ -30,8 +30,6 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
         return $this->config->exists($player);
     }
 
@@ -40,9 +38,7 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
-        if (!$this->hasAccount($player)) {
+        if(!$this->hasAccount($player)){
             $this->config->set($player, [
                 "kills" => 0,
                 "deaths" => 0,
@@ -57,11 +53,9 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
         $kills = KDRSavedData::getInstance()->getKills($player);
-        
-        $this->config->set($player, $kills + 1);
+
+        $this->config->setNested("$player.kills", $kills + 1);
         $this->config->save();
     }
 
@@ -70,11 +64,9 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
         $killstreak = KDRSavedData::getInstance()->getKillStreak($player);
-        
-        $this->config->set($player, $killstreak + 1);
+
+        $this->config->setNested("$player.kill_streak", $killstreak + 1);
         $this->config->save();
     }
 
@@ -83,11 +75,7 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $this->config->set($player, [
-            "kills" => KDRSavedData::getInstance()->getKills($player),
-            "deaths" => KDRSavedData::getInstance()->getDeaths($player),
-            "kill_streak" => 0
-        ]);
+        $this->config->setNested("$player.kill_streak", 0);
         $this->config->save();
     }
 
@@ -96,11 +84,9 @@ final class KDR {
             $player = $player->getName();
         }
 
-        $player = $player;
-
         $deaths = KDRSavedData::getInstance()->getDeaths($player);
-        
-        $this->config->set($player, $deaths + 1);
+
+        $this->config->setNested("$player.deaths", $deaths + 1);
         $this->config->save();
     }
 }
