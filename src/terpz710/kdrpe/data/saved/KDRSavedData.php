@@ -17,10 +17,10 @@ final class KDRSavedData {
     protected Config $config;
 
     public function __construct() {
-        $dataFolder = Main::getInstance()->getDataFolder();
+        $folder = Main::getInstance()->getDataFolder();
 
-        @mkdir($dataFolder . "database/");
-        $this->config = new Config($dataFolder . "database/data.json");
+        @mkdir($folder . "database/");
+        $this->config = new Config($folder . "database/data.json");
     }
 
     public function getAllAccounts() : array{
