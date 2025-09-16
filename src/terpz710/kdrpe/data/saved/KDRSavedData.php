@@ -33,25 +33,16 @@ final class KDRSavedData {
         }
 
         $data = $this->config->get($player);
-        
-        if($data === false){
-            return 0;
-        }
-
-        return (int) $data["kills"];
+        return (int)($data["kills"]);
     }
 
-    public function getDeaths($player) : int{
+    public function getDeaths($player) : int {
         if($player instanceof Player){
             $player = $player->getName();
         }
 
         $data = $this->config->get($player);
-        if($data === false){
-            return 0;
-        }
-
-        return (int) $data["deaths"];
+        return (int)($data["deaths"]);
     }
 
     public function getKillStreak($player) : int{
@@ -60,24 +51,17 @@ final class KDRSavedData {
         }
 
         $data = $this->config->get($player);
-        
-        if($data === false){
-            return 0;
-        }
-
-        return (int) $data["kill_streak"];
+        return (int)($data["kill_streak"]);
     }
 
-    public function getKDR($player) : ?float{
+    public function getKDR($player) : float{
         if($player instanceof Player){
             $player = $player->getName();
         }
 
-        $player = $player;
-        
         $kills = $this->getKills($player);
         $deaths = $this->getDeaths($player);
-        $kdr = ($deaths === 0) ? $kills : round($kills / $deaths, 2);
-        return $kdr;
+
+        return $deaths === 0 ? (float)$kills : round($kills / $deaths, 2);
     }
 }
