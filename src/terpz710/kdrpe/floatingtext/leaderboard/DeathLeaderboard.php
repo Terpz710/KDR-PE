@@ -28,7 +28,7 @@ final class DeathLeaderboard {
 
     public function updateDeathFT() : void{
         $top_deaths = $this->getTopDeaths();
-        $text = "§l§a-=Top Deaths Leaderboard=-\n";
+        $text = "§l§c-=Top Deaths Leaderboard=-\n";
 
         $rank = 1;
         foreach ($top_deaths as $name => $deaths) {
