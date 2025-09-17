@@ -152,8 +152,6 @@ class EventListener implements Listener {
         }
 
         KillStreakLeaderboard::getInstance()->updateKillStreakFT();
-
-        $player->sendMessage("Ive been fired up - Add Kill Streak Event");
     }
 
     public function resetKillStreak(ResetKillStreakEvent $event) : void{
