@@ -125,7 +125,7 @@ class EventListener implements Listener {
             KDRScoreboard::updateTag($player);
         }
 
-        KillStreakLeaderboard::getInstance()->updateKillFT();
+        KillLeaderboard::getInstance()->updateKillFT();
     }
 
     public function addDeath(AddDeathEvent $event) : void{
