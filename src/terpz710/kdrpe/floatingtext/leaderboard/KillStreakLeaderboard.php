@@ -28,7 +28,7 @@ final class KillStreakLeaderboard {
 
     public function updateKillStreakFT() : void{
         $top_killstreak = $this->getTopKillStreak();
-        $text = "§l§a-=Top KillStreak Leaderboard=-\n";
+        $text = "§l§b-=Top KillStreak Leaderboard=-\n";
 
         $rank = 1;
         foreach ($top_killstreak as $name => $killstreak) {
