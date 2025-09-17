@@ -9,22 +9,13 @@ use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 
-use terpz710\kdrpe\Main;
+use terpz710\kdrpe\data\KDR;
 
 final class KDRSavedData {
     use SingletonTrait;
 
-    protected Config $config;
-
-    public function __construct() {
-        $folder = Main::getInstance()->getDataFolder();
-
-        @mkdir($folder . "database/");
-        $this->config = new Config($folder . "database/data.json");
-    }
-
     public function getAllAccounts() : array{
-        return $this->config->getAll();
+        return KDR::getInstance()->getConfig()->getAll();
     }
 
     public function getKills($player) : int{
@@ -32,7 +23,7 @@ final class KDRSavedData {
             $player = $player->getName();
         }
 
-        $data = $this->config->get($player);
+        $data = KDR::getInstance()->getConfig()->get($player);
         return (int)($data["kills"] ?? 0);
     }
 
@@ -41,7 +32,7 @@ final class KDRSavedData {
             $player = $player->getName();
         }
 
-        $data = $this->config->get($player);
+        $data = KDR::getInstance()->getConfig()->get($player);
         return (int)($data["deaths"] ?? 0);
     }
 
@@ -50,7 +41,7 @@ final class KDRSavedData {
             $player = $player->getName();
         }
 
-        $data = $this->config->get($player);
+        $data = KDR::getInstance()->getConfig()->get($player);
         return (int)($data["kill_streak"] ?? 0);
     }
 
