@@ -89,4 +89,8 @@ final class KDR {
         $this->config->setNested("$player.deaths", $deaths + 1);
         $this->config->save();
     }
+
+    public function getConfig() : Config{
+        return $this->config;
+    }
 }
