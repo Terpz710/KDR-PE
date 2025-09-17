@@ -125,7 +125,7 @@ class EventListener implements Listener {
             KDRScoreboard::updateTag($player);
         }
 
-        $player->sendMessage("Ive been fired up - Kill Event");
+        KillStreakLeaderboard::getInstance()->updateKillFT();
     }
 
     public function addDeath(AddDeathEvent $event) : void{
@@ -138,7 +138,7 @@ class EventListener implements Listener {
             KDRScoreboard::updateTag($player);
         }
 
-        $player->sendMessage("Ive been fired up - Death Event");
+        DeathLeaderboard::getInstance()->updateDeathFT();
     }
 
     public function killStreak(AddKillStreakEvent $event) : void{
@@ -151,7 +151,7 @@ class EventListener implements Listener {
             KDRScoreboard::updateTag($player);
         }
 
-        KillLeaderboard::getInstance()->updateKillFT();
+        KillStreakLeaderboard::getInstance()->updateKillStreakFT();
 
         $player->sendMessage("Ive been fired up - Add Kill Streak Event");
     }
@@ -167,7 +167,5 @@ class EventListener implements Listener {
         }
 
         KillStreakLeaderboard::getInstance()->updateKillStreakFT();
-
-        $player->sendMessage("Ive been fired up - Reset Kill Streak Event");
     }
 }
