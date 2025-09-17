@@ -72,8 +72,11 @@ final class FloatingText {
     }
 
     public static function loadFromFile() : void{
-        if (file_exists(Main::getInstance()->getDataFolder() . "floating_text.json")) {
-            $data = json_decode(file_get_contents(Main::getInstance()->getDataFolder() . "floating_text.json"), true);
+        $folder = Main::getInstance()->getDataFolder() . "database/";
+        $file = $folder . "floating_text.json";
+
+        if (file_exists($file)) {
+            $data = json_decode(file_get_contents($file), true);
 
             foreach ($data as $tag => $textData) {
                 $world = Server::getInstance()->getWorldManager()->getWorldByName($textData["world"]);
@@ -91,7 +94,10 @@ final class FloatingText {
     }
 
     public static function saveToFile() : void{
-        $filePath = new Config(Main::getInstance()->getDataFolder() . "floating_text.json");
+        $folder = Main::getInstance()->getDataFolder() . "database/";
+        @mkdir($folder);
+
+        $filePath = new Config($folder . "floating_text.json", Config::JSON);
 
         $data = [];
 
