@@ -97,7 +97,7 @@ final class FloatingText {
         $folder = Main::getInstance()->getDataFolder() . "database/";
         @mkdir($folder);
 
-        $filePath = new Config($folder . "floating_text.json", Config::JSON);
+        $filePath = new Config($folder . "floating_text.json");
 
         $data = [];
 
