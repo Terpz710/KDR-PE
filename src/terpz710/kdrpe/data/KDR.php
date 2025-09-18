@@ -13,6 +13,10 @@ use terpz710\kdrpe\Main;
 
 use terpz710\kdrpe\data\saved\KDRSavedData;
 
+use terpz710\kdrpe\floatingtext\leaderboard\KillLeaderboard;
+use terpz710\kdrpe\floatingtext\leaderboard\DeathLeaderboard;
+use terpz710\kdrpe\floatingtext\leaderboard\KillStreakLeaderboard;
+
 final class KDR {
     use SingletonTrait;
 
@@ -45,6 +49,9 @@ final class KDR {
                 "kill_streak" => 0
             ]);
             $this->config->save();
+            KillLeaderboard::getInstance()->updateKillFT();
+            DeathLeaderboard::getInstance()->updateDeathFT();
+            KillStreakLeaderboard::getInstance()->updateKillStreakFT();
         }
     }
 
