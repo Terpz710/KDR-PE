@@ -34,7 +34,7 @@ use Ifera\ScoreHud\event\TagsResolveEvent;
 
 class EventListener implements Listener {
 
-    public function join(PlayerJoinEvent $event) : void{
+    public function onJoin(PlayerJoinEvent $event) : void{
         $player = $event->getPlayer();
         $kdr = KDR::getInstance();
 
@@ -43,10 +43,15 @@ class EventListener implements Listener {
         }
     }
 
-    public function death(PlayerDeathEvent $event) : void{
+    public function onDeath(PlayerDeathEvent $event) : void{
         $player = $event->getPlayer();
         $kdr = KDR::getInstance();
         $cause = $player->getLastDamageCause();
+        $add_death_e = new AddDeathEvent($player->getName());
+        $reset_kill_streak_e = new ResetKillStreakEvent($player->getName());
+
+        $add_death_e->call();
+        $reset_kill_streak_e->call();
 
         if($cause instanceof EntityDamageByEntityEvent){
             $damager = $cause->getDamager();
@@ -59,27 +64,21 @@ class EventListener implements Listener {
                 $add_kill_streak_e->call();
             }
         }
-
-        $add_death_e = new AddDeathEvent($player->getName());
-        $reset_kill_streak_e = new ResetKillStreakEvent($player->getName());
-
-        $add_death_e->call();
-        $reset_kill_streak_e->call();
     }
 
-    public function chunkLoad(ChunkLoadEvent $event) {
+    public function onChunkLoad(ChunkLoadEvent $event) {
         FloatingText::loadFromFile();
     }
 
-    public function chunkUnload(ChunkUnloadEvent $event) {
+    public function onChunkUnload(ChunkUnloadEvent $event) {
         FloatingText::saveFile();
     }
 
-    public function worldUnload(WorldUnloadEvent $event) {
+    public function onWorldUnload(WorldUnloadEvent $event) {
         FloatingText::saveFile();
     }
 
-    public function teleport(EntityTeleportEvent $event) {
+    public function onTeleport(EntityTeleportEvent $event) {
         $entity = $event->getEntity();
         
         if ($entity instanceof Player) {
@@ -96,7 +95,7 @@ class EventListener implements Listener {
         }
     }
 
-    public function tagResolve(TagsResolveEvent $event) {
+    public function onTagResolve(TagsResolveEvent $event) {
         $player = $event->getPlayer();
         $tag = $event->getTag();
 
@@ -115,7 +114,7 @@ class EventListener implements Listener {
         };
     }
 
-    public function addKill(AddKillEvent $event) : void{
+    public function onAddKill(AddKillEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
@@ -128,7 +127,7 @@ class EventListener implements Listener {
         KillLeaderboard::getInstance()->updateKillFT();
     }
 
-    public function addDeath(AddDeathEvent $event) : void{
+    public function onAddDeath(AddDeathEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
@@ -141,7 +140,7 @@ class EventListener implements Listener {
         DeathLeaderboard::getInstance()->updateDeathFT();
     }
 
-    public function killStreak(AddKillStreakEvent $event) : void{
+    public function onKillStreak(AddKillStreakEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
@@ -154,7 +153,7 @@ class EventListener implements Listener {
         KillStreakLeaderboard::getInstance()->updateKillStreakFT();
     }
 
-    public function resetKillStreak(ResetKillStreakEvent $event) : void{
+    public function onResetKillStreak(ResetKillStreakEvent $event) : void{
         $name = $event->getName();
         $player = Server::getInstance()->getPlayerExact($name);
 
