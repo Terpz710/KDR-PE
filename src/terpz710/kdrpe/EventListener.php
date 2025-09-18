@@ -125,6 +125,8 @@ class EventListener implements Listener {
         }
 
         KillLeaderboard::getInstance()->updateKillFT();
+
+        $player->sendMessage("Ive been fired up - Add Kill Event");
     }
 
     public function onAddDeath(AddDeathEvent $event) : void{
@@ -151,6 +153,8 @@ class EventListener implements Listener {
         }
 
         KillStreakLeaderboard::getInstance()->updateKillStreakFT();
+
+        $player->sendMessage("Ive been fired up - Add Kill Streak Event");
     }
 
     public function onResetKillStreak(ResetKillStreakEvent $event) : void{
