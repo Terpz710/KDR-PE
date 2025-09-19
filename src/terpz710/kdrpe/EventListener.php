@@ -49,11 +49,20 @@ class EventListener implements Listener {
         $victim = $event->getPlayer();
         $cause = $victim->getLastDamageCause();
 
+        $add_death_e = new AddDeathEvent($victim->getName());
+        $reset_kill_streak_e = new ResetKillStreakEvent($victim->getName());
+
+        $add_death_e->call();
+        $reset_kill_streak_e->call();
+
         if($cause !== null && $cause->getEntity() !== null && $cause->getEntity() instanceof Player){
             $killer = $cause->getEntity();
-            
-            $ev = new PlayerKillEvent($killer, $victim);
-            $ev->call();
+
+            $add_kill_e = new AddKillEvent($killer->getName());
+            $add_kill_streak_e = new AddKillStreakEvent($killer->getName());
+                
+            $add_kill_e->call();
+            $add_kill_streak_e->call();
         }
     }
 
