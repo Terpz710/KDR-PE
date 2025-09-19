@@ -13,6 +13,8 @@ use pocketmine\event\world\ChunkLoadEvent;
 use pocketmine\event\world\ChunkUnloadEvent;
 use pocketmine\event\world\WorldUnloadEvent;
 
+use pocketmine\player\Player;
+
 use pocketmine\Server;
 
 use terpz710\kdrpe\data\KDR;
@@ -43,26 +45,15 @@ class EventListener implements Listener {
         }
     }
 
-    public function onDeath(PlayerDeathEvent $event) : void{
-        $player = $event->getPlayer();
-        $kdr = KDR::getInstance();
-        $cause = $player->getLastDamageCause();
-        $add_death_e = new AddDeathEvent($player->getName());
-        $reset_kill_streak_e = new ResetKillStreakEvent($player->getName());
+    public function onDeath(PlayerDeathEvent $event) : void {
+        $victim = $event->getPlayer();
+        $cause = $victim->getLastDamageCause();
 
-        $add_death_e->call();
-        $reset_kill_streak_e->call();
-
-        if($cause instanceof EntityDamageByEntityEvent){
-            $damager = $cause->getDamager();
-
-            if($damager instanceof Player){
-                $add_kill_e = new AddKillEvent($damager->getName());
-                $add_kill_streak_e = new AddKillStreakEvent($damager->getName());
-                
-                $add_kill_e->call();
-                $add_kill_streak_e->call();
-            }
+        if($cause !== null && $cause->getEntity() !== null && $cause->getEntity() instanceof Player){
+            $killer = $cause->getEntity();
+            
+            $ev = new PlayerKillEvent($killer, $victim);
+            $ev->call();
         }
     }
 
