@@ -1,27 +1,5 @@
 name: KDR-PE
 version: 1.0.6
 author: Terpz710
-authors: ["WavyCraft"]
-api: 5.3.0
-main: terpz710\kdrpe\Main
-description: A KDR system.
-
-softdepend: ScoreHud
-
-permissions:
-  kdrpe.kdr:
-    default: true
-  kdrpe.seekdr:
-    default: true
-  kdrpe.topkill:
-    default: true
-  kdrpe.topdeath:
-    default: true
-  kdrpe.topkillstreak:
-    default: true
-  kdrpe.killleaderboard:
-    default: op
-  kdrpe.deathleaderboard:
-    default: op
-  kdrpe.killstreakleaderboard:
-    default: op
+api: 5.43.2
+main: terpz710\kdrpe\Core
