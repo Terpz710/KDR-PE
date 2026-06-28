@@ -66,7 +66,7 @@ class LeaderboardCommand extends KDRCommand {
     private function availableTypes(Player $player) : void{
         $player->sendMessage("Unknown leaderboard type!");
         $player->sendMessage("");
-        $sender->sendMessage("Available types:");
+        $player->sendMessage("Available types:");
         $player->sendMessage("kill, killstreak and death");
     }
 }

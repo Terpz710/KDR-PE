@@ -24,7 +24,6 @@ class Leaderboard {
         switch ($this->type) {
             case LeaderboardType::UNKNOWN:
                 throw new LeaderboardException("Unknown leaderboard type!");
-            break;
             
             case LeaderboardType::KILL:
                 $top_kills = $api->getTopKills();
@@ -75,8 +74,7 @@ class Leaderboard {
             break;
             
             default:
-                throw new LeaderboardException("Invalid leaderboard type: " . $type);
-            break;
+                throw new LeaderboardException("Invalid leaderboard type: " . $this->type);
         }
     }
     
