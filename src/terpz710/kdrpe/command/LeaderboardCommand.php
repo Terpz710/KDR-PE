@@ -35,35 +35,38 @@ class LeaderboardCommand extends KDRCommand {
         if (!isset($args[0])) {
             throw new InvalidCommandSyntaxException();
         }
-        
-        if (!is_string($args[0])) {
-            $sender->sendMessage("");
-            return;
-        }
-        
-        if (is_numeric($args[0])) {
-            $sender->sendMessage("");
-            return;
-        }
 
         if (!LeaderboardType::validateType($args[0])) {
             $sender->sendMessage("");
             return;
         }
-        
+
         $type = $this->matchType($args[0]);
+
+        if ($type === null) {
+            $this->availableTypes($sender);
+            return;
+        }
+        
         $lb = new Leaderboard($type);
         
         $lb->buildLeaderboard($sender);
     }
-    
-    private function matchType(string $type) : LeaderboardType{
+
+    private function matchType(string $type) : ?string{
         return match ($type) {
             "unknown", "KNOWN", "Unknown" => LeaderboardType::UNKNOWN,
             "kill", "KILL", "Kill" => LeaderboardType::KILL,
             "death", "DEATH", "Death" => LeaderboardType::DEATH,
             "killstreak", "KILLSTREAK", "Killstreak" => LeaderboardType::KILLSTREAK,
-            default => throw new LeaderboardException("Unknown leaderboard type: " . $type)
+            default => null
         };
+    }
+
+    private function availableTypes(Player $player) : void{
+        $player->sendMessage("Unknown leaderboard type!");
+        $player->sendMessage("");
+        $sender->sendMessage("Available types:");
+        $player->sendMessage("kill, killstreak and death");
     }
 }

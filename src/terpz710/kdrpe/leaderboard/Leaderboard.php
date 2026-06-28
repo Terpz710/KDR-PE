@@ -12,9 +12,9 @@ use terpz710\kdrpe\utils\Message;
 
 class Leaderboard {
     
-    private LeaderboardType $type;
+    private string $type;
     
-    public function __construct(LeaderboardType $type = LeaderboardType::UNKNOWN) {
+    public function __construct(string $type = LeaderboardType::UNKNOWN) {
         $this->type = $type;
     }
     
