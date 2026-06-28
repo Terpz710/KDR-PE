@@ -5,8 +5,5 @@ branches:
 projects:
   KDR-PE:
     path: ""
-    libs:
-       - src: Terpz710/Commando/Commando
-         version: ^3.2.1
-    lint: false
+    lint: true
 ...
