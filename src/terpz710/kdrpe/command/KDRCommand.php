@@ -4,38 +4,23 @@ declare(strict_types=1);
 
 namespace terpz710\kdrpe\command;
 
-use pocketmine\command\CommandSender;
+use pocketmine\command\Command;
 
-use pocketmine\player\Player;
+use pocketmine\plugin\PluginOwned;
 
-use terpz710\kdrpe\data\saved\KDRSavedData;
+use terpz710\kdrpe\Core;
 
-use CortexPE\Commando\BaseCommand;
-
-class KDRCommand extends BaseCommand {
-
-    protected function prepare() : void{
-        $this->setPermission("kdrpe.kdr");
+abstract class KDRCommand extends Command implements PluginOwned {
+    
+    private Core $plugin;
+    
+    public function __construct(string $name, Core $plugin) {
+        parent::__construct($name);
+        $this->plugin = $plugin;
+        $this->usageMessage = "";
     }
-
-    public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void{
-        if (!$sender instanceof Player) {
-            $sender->sendMessage("This command can only be used ingame!");
-            return;
-        }
-
-        $kdr = KDRSavedData::getInstance();
-
-        $kills = $kdr->getKills($sender);
-        $deaths = $kdr->getDeaths($sender);
-        $killstreak = $kdr->getKillStreak($sender);
-        $kd = $kdr->getKDR($sender);
-
-        $sender->sendMessage("§l=====§e KDR stats §f=====");
-        $sender->sendMessage("kills:§e " . $kills);
-        $sender->sendMessage("deaths:§e " . $deaths);
-        $sender->sendMessage("killStreak:§e " . $killstreak);
-        $sender->sendMessage("KDR:§e " . $kd);
-        $sender->sendMessage("§l====================");
+    
+    public function getOwningPlugin() : Core{
+        return $this->plugin;
     }
 }

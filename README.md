@@ -8,16 +8,9 @@ A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system, See 
 
 This plugin also creates a floating text leaderboards that shows off the top kills, deaths and killstreaks on the server as well!
 
-~~KDR-PE had a huge code rewrite on January 7, 2025 - **OLD**~~
+~~KDR-PE had a huge code rewrite on June 9, 2026~~
 
-~~This rewrite fixes 99% of the bugs from v1.0.5 rewrite.... **OLD**~~
-
-KDR-PE had a huge code rewrite on September 11, 2025.
-
-This rewrite fixes 99.99% of the bugs from v1.0.6 rewrite...
-
-**Note:**
-Theres a bug where the floatingtext leaderboard shows an empty leaderboard, to fix this just type the command again.
+~~This rewrite fixes 99.99% of the bugs from v1.0.6 rewrite...~~
 
 # Features 
 
@@ -29,15 +22,7 @@ Theres a bug where the floatingtext leaderboard shows an empty leaderboard, to f
 * TopDeath system
 * TopKillStreak system
 * See other players kills, deaths, killstreak and KDRS
-* Built in [Scorehud](https://github.com/Ifera/ScoreHud) support!
 * CREATE A TOP KILL/DEATH/KILLSTREAK LEADERBOARD (Floating Text)!
-
-## ScoreHud Tags
-
-* Kills: {kdrpe.kills}
-* Deaths: {kdrpe.deaths}
-* KDR: {kdrpe.kdr}
-* KillStreak: {kdrpe.killstreak}
 
 # Permissions/Commands
 

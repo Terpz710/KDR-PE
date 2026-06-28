@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+namespace terpz710\kdrpe\command;
+
+use pocketmine\command\CommandSender;
+use pocketmine\command\utils\InvalidCommandSyntaxException;
+
+use pocketmine\player\Player;
+
+use terpz710\kdrpe\Core;
+
+use terpz710\kdrpe\api\KDR;
+
+class StatsCommand extends KDRCommand {
+    
+    public function __construct(protected Core $plugin) {
+        parent::__construct("kdr", $this->plugin);
+        $this->setDescription("Checkout your current KDR stats");
+        $this->setPermission("kdrpe.stats");
+    }
+    
+    public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+        if (!$sender instanceof Player) {
+            $sendetr->sendMessage((string) new Message("use-command-ingame"));
+            return;
+        }
+        
+        KDR::getInstance()->fetchStats($sender, false);
+    }
+}

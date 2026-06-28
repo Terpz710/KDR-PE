@@ -1,0 +1,16 @@
+use-command=ingame: "Run this command in-game"
+
+stats-title: "-= {player} stats =-"
+stats-body-kills: "Kills: {kills}"
+stats-body-killstreak: "Killstreak: {killstreak}"
+stats-body-deaths: "Deaths: {deaths}"
+stats-body-kdr: "KDR: {kdr}"
+
+stats-title-other: "-= {player} stats =-"
+stats-body-kills-other: "Kills: {kills}"
+stats-body-killstreak-other: "Killstreak: {killstreak}"
+stats-body-deaths-other: "Deaths: {deaths}"
+stats-body-kdr-other: "KDR: {kdr}"
+
+leaderboard-kill-title: "-= Top 10 Killers =-"
+leaderboard-kill-body: "{position}. {player} - {kills} kills"

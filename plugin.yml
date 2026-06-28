@@ -3,3 +3,9 @@ version: 1.0.6
 author: Terpz710
 api: 5.43.2
 main: terpz710\kdrpe\Core
+
+permissions:
+  kdrpe.stats:
+    default: true
+  kdrpe.otherstats:
+    default: true
