@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace terpz710\kdrpe\utils;
 
+use pocketmine\utils\TextFormat;
+
 use terpz710\kdrpe\Core;
 
 class Message {

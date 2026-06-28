@@ -11,17 +11,13 @@ class LeaderboardType {
     public const KILLSTREAK = "kdrpe:killstreak";
     public const DEATH = "kdrpe:deaths";
     
-    private function __construct() {
-        //nada
-    }
-    
     public static function validateType(self|string $type) : bool{
         return match ($type) {
             self::UNKNOWN, "UNKNOWN", "unknown", "Unknown" => true,
             self::KILL, "KILL", "kill", "Kill" => true,
             self::KILLSTREAK, "KILLSTREAK", "killstreak", "Killstreak" => true,
             self::DEATH, "DEATH", "death", "Death" => true,
-            default => throw new LeaderboardException("Unknown leaderboard type: " . $type)
+            default => false
         };
     }
 }

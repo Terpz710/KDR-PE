@@ -13,6 +13,8 @@ use terpz710\kdrpe\Core;
 
 use terpz710\kdrpe\api\KDR;
 
+use terpz710\kdrpe\utils\Message;
+
 class StatsCommand extends KDRCommand {
     
     public function __construct(protected Core $plugin) {
@@ -23,7 +25,7 @@ class StatsCommand extends KDRCommand {
     
     public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
         if (!$sender instanceof Player) {
-            $sendetr->sendMessage((string) new Message("use-command-ingame"));
+            $sender->sendMessage((string) new Message("use-command-ingame"));
             return;
         }
         

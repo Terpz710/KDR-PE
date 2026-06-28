@@ -9,3 +9,5 @@ permissions:
     default: true
   kdrpe.otherstats:
     default: true
+  kdrpe.leaderboard:
+    default: true

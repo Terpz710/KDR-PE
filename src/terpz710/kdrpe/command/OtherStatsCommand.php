@@ -13,6 +13,8 @@ use terpz710\kdrpe\Core;
 
 use terpz710\kdrpe\api\KDR;
 
+use terpz710\kdrpe\utils\Message;
+
 class OtherStatsCommand extends KDRCommand {
     
     public function __construct(protected Core $plugin) {
@@ -30,7 +32,6 @@ class OtherStatsCommand extends KDRCommand {
         
         if (!isset($args[0])) {
             throw new InvalidCommandSyntaxException();
-            return;
         }
         
         KDR::getInstance()->fetchStats($sender, true, $args[0]);

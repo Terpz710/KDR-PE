@@ -47,7 +47,7 @@ class Database {
             
             $result->finalize();
             
-            return $data === null ? true : false;
+            return $data === false ? true : false;
         } finally {
             $stmt->close();
         }

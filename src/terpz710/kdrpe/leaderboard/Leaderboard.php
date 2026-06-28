@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace terpz710\kdrpe\leaderboard;
 
+use pocketmine\player\Player;
+
+use terpz710\kdrpe\api\KDR;
+
+use terpz710\kdrpe\utils\Message;
+
 class Leaderboard {
     
     private LeaderboardType $type;
@@ -16,10 +22,8 @@ class Leaderboard {
         $api = KDR::getInstance();
         
         switch ($this->type) {
-            case "":
             case LeaderboardType::UNKNOWN:
-                throw new LeaderboardException("Leaderboard type is invalid or empty!");
-                return;
+                throw new LeaderboardException("Unknown leaderboard type!");
             break;
             
             case LeaderboardType::KILL:
@@ -44,7 +48,7 @@ class Leaderboard {
                 
                 $player->sendMessage((string) new Message("leaderboard-killstreak-title"));
                 
-                foreach ($top_kills as $data) {
+                foreach ($top_killstreak as $data) {
                     $player->sendMessage((string) new Message(
                         "leaderboard-killstreak-body",
                         ["{position}", "{player}", "{killstreak}"],
@@ -52,7 +56,6 @@ class Leaderboard {
                     ));
                     $i++;
                 }
-                
             break;
             
             case LeaderboardType::DEATH:
