@@ -10,6 +10,8 @@ use pocketmine\utils\SingletonTrait;
 
 use terpz710\kdrpe\database\Database;
 
+use terpz710\kdrpe\utils\Message;
+
 use terpz710\kdrpe\event\AddKillEvent;
 use terpz710\kdrpe\event\AddKillstreakEvent;
 use terpz710\kdrpe\event\ResetKillstreakEvent;
