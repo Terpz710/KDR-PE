@@ -21,7 +21,7 @@ class LeaderboardType {
             self::KILL, "KILL", "kill", "Kill" => true,
             self::KILLSTREAK, "KILLSTREAK", "killstreak", "Killstreak" => true,
             self::DEATH, "DEATH", "death", "Death" => true,
-            default => throw new LeaderboardException("Unknown leaderboard type: " . $type);
+            default => throw new LeaderboardException("Unknown leaderboard type: " . $type)
         };
     }
 }
