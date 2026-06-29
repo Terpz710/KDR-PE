@@ -70,4 +70,3 @@ class FTextLeaderboardCommand extends KDRCommand {
         $player->sendMessage("kill, killstreak and death");
     }
 }
-}
