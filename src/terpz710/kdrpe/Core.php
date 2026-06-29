@@ -10,6 +10,8 @@ use pocketmine\utils\Config;
 
 use terpz710\kdrpe\command\StatsCommand;
 use terpz710\kdrpe\command\OtherStatsCommand;
+use terpz710\kdrpe\command\LeaderboardCommand;
+use terpz710\kdrpe\command\FTLeaderboardCommand;
 
 use terpz710\kdrpe\database\Database;
 
@@ -35,7 +37,9 @@ class Core extends PluginBase {
         
         $server->getCommandMap()->registerAll("KDR-PE", [
             new StatsCommand($this),
-            new OtherStatsCommand($this)
+            new OtherStatsCommand($this),
+            new LeaderboardCommand($this),
+            new FTLeaderboardCommand($this)
         ]);
     }
     

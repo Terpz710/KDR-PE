@@ -11,3 +11,5 @@ permissions:
     default: true
   kdrpe.leaderboard:
     default: true
+  kdrpe.ftext.leaderboard:
+    default: op

@@ -11,6 +11,8 @@ use pocketmine\player\Player;
 
 use terpz710\kdrpe\Core;
 
+use terpz710\kdrpe\database\Database;
+
 use terpz710\kdrpe\api\KDR;
 
 use terpz710\kdrpe\utils\Message;
@@ -32,6 +34,11 @@ class OtherStatsCommand extends KDRCommand {
         
         if (!isset($args[0])) {
             throw new InvalidCommandSyntaxException();
+        }
+
+        if (Database::getInstance()->isNew($args[0])) {
+            $sender->sendMessage((string) new Message("player-not-found"));
+            return;
         }
         
         KDR::getInstance()->fetchStats($sender, true, $args[0]);

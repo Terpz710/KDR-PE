@@ -1,4 +1,6 @@
 use-command=ingame: "Run this command in-game"
+player-not-found: "Player doesn't exist!"
+invalid-type: "Type '{type}' is invalid!"
 
 stats-title: "-= {player} stats =-"
 stats-body-kills: "Kills: {kills}"
@@ -14,3 +16,18 @@ stats-body-kdr-other: "KDR: {kdr}"
 
 leaderboard-kill-title: "-= Top 10 Killers =-"
 leaderboard-kill-body: "{position}. {player} - {kills} kills"
+
+ftext-leaderboard-kill-title: "-= Top 10 Killers =-{line}"
+ftext-leaderboard-kill-body: "{position}. {player} - {kills} kills{line}"
+
+leaderboard-killstreak-title: "-= Top 10 Killstreaks =-"
+leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak"
+
+ftext-leaderboard-killstreak-title: "-= Top 10 Killstreaks =-{line}"
+ftext-leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak{line}"
+
+leaderboard-death-title: "-= Top 10 Deaths =-"
+leaderboard-death-body: "{position}. {player} - {deaths} deaths"
+
+ftext-leaderboard-death-title: "-= Top 10 Deaths =-{line}"
+ftext-leaderboard-death-body: "{position}. {player} - {deaths} deaths{line}"

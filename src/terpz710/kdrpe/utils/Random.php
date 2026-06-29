@@ -13,7 +13,7 @@ class Random {
     **/
     public static function generateRandomNumber(?int $number1 = null, ?int $number2 = null) : int{
         if ($number1 === null || $number2 === null) {
-            return rand();
+            return rand();//returns either small or BIG integer btw
         }
 
         return rand($number1, $number2);

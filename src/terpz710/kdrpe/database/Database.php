@@ -37,7 +37,7 @@ class Database {
     
     public function isNew(Player|string $player) : bool{
         $player = $player instanceof Player ? $player->getName() : $player;
-        $stmt = $this->sql->prepare("SELECT * FROM stats WHERE player = player;");
+        $stmt = $this->sql->prepare("SELECT * FROM stats WHERE player = :player;");
         
         try {
             $stmt->bindValue(":player", $player, SQLITE3_TEXT);

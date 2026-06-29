@@ -12,6 +12,11 @@ use terpz710\kdrpe\database\Database;
 
 use terpz710\kdrpe\utils\Message;
 
+use terpz710\kdrpe\floatingtext\FloatingText;
+
+use terpz710\kdrpe\leaderboard\Leaderboard;
+use terpz710\kdrpe\leaderboard\LeaderboardType;
+
 use terpz710\kdrpe\event\AddKillEvent;
 use terpz710\kdrpe\event\AddKillstreakEvent;
 use terpz710\kdrpe\event\ResetKillstreakEvent;
@@ -45,6 +50,7 @@ final class KDR {
     public function addKill(Player|string $player, int $amount = 1) : void{
         $player = $player instanceof Player ? $player->getName() : $player;
         $e = new AddKillEvent($player);
+        $lb = new Leaderboard(LeaderboardType::KILL);
         $stmt = Database::getInstance()->getSQL()->prepare("UPDATE stats SET kills = kills + :amount WHERE player = :player;");
         
         try {
@@ -60,6 +66,10 @@ final class KDR {
             
             if ($e->isCancelled()) {
                 return;
+            }
+
+            if (FloatingText::canSpawn()) {
+                $lb->updateFloatingText();
             }
         }
     }
@@ -85,6 +95,7 @@ final class KDR {
     public function addKillstreak(Player|string $player, int $amount = 1) : void{
         $player = $player instanceof Player ? $player->getName() : $player;
         $e = new AddKillstreakEvent($player);
+        $lb = new Leaderboard(LeaderboardType::KILLSTREAK);
         $stmt = Database::getInstance()->getSQL()->prepare("UPDATE stats SET killstreak = killstreak + :amount WHERE player = :player;");
         
         try {
@@ -101,12 +112,17 @@ final class KDR {
             if ($e->isCancelled()) {
                 return;
             }
+
+            if (FloatingText::canSpawn()) {
+                $lb->updateFloatingText();
+            }
         }
     }
     
     public function resetKillstreak(Player|string $player, int $amount = 0) : void{
         $player = $player instanceof Player ? $player->getName() : $player;
         $e = new ResetKillstreakEvent($player);
+        $lb = new Leaderboard(LeaderboardType::KILLSTREAK);
         $stmt = Database::getInstance()->getSQL()->prepare("UPDATE stats SET killstreak = :amount WHERE player = :player;");
         
         try {
@@ -122,6 +138,10 @@ final class KDR {
             
             if ($e->isCancelled()) {
                 return;
+            }
+
+            if (FloatingText::canSpawn()) {
+                $lb->updateFloatingText();
             }
         }
     }
@@ -147,6 +167,7 @@ final class KDR {
     public function addDeath(Player|string $player, int $amount = 1) : void{
         $player = $player instanceof Player ? $player->getName() : $player;
         $e = new AddDeathEvent($player);
+        $lb = new Leaderboard(LeaderboardType::DEATH);
         $stmt = Database::getInstance()->getSQL()->prepare("UPDATE stats SET deaths = deaths + :amount WHERE player = :player;");
         
         try {
@@ -162,6 +183,10 @@ final class KDR {
             
             if ($e->isCancelled()) {
                 return;
+            }
+
+            if (FloatingText::canSpawn()) {
+                $lb->updateFloatingText();
             }
         }
     }
@@ -190,7 +215,7 @@ final class KDR {
             $player->sendMessage((string) new Message("stats-body-kills-other", "{kills}", number_format($other_kills)));
             $player->sendMessage((string) new Message("stats-body-killstreak-other", "{killstreak}", number_format($other_killstreak)));
             $player->sendMessage((string) new Message("stats-body-deaths-other", "{deaths}", number_format($other_deaths)));
-            $player->sendMessage((string) new Message("stats-body-kdr-other", "{kdr}", $other_kdr));
+            $player->sendMessage((string) new Message("stats-body-kdr-other", "{kdr}", (string) $other_kdr));
         } else {
             $kills = $this->getKills($player);
             $killstreak = $this->getKillstreak($player);
@@ -201,7 +226,7 @@ final class KDR {
             $player->sendMessage((string) new Message("stats-body-kills", "{kills}", number_format($kills)));
             $player->sendMessage((string) new Message("stats-body-killstreak", "{killstreak}", number_format($killstreak)));
             $player->sendMessage((string) new Message("stats-body-deaths", "{deaths}", number_format($deaths)));
-            $player->sendMessage((string) new Message("stats-body-kdr", "{kdr}", $kdr));
+            $player->sendMessage((string) new Message("stats-body-kdr", "{kdr}", (string) $kdr));
         }
     }
     

@@ -8,7 +8,7 @@ A [Pocketmine-MP](https://pmmp.io) plugin that adds a KDR managment system, See 
 
 This plugin also creates a floating text leaderboards that shows off the top kills, deaths and killstreaks on the server as well!
 
-~~KDR-PE had a huge code rewrite on June 9, 2026~~
+~~KDR-PE had a huge code rewrite on %place_holder%, 2026~~
 
 ~~This rewrite fixes 99.99% of the bugs from v1.0.6 rewrite...~~
 
