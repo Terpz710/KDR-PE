@@ -13,16 +13,22 @@ use pocketmine\event\world\WorldUnloadEvent;
 use pocketmine\event\world\ChunkLoadEvent;
 use pocketmine\event\world\ChunkUnloadEvent;
 
+use pocketmine\player\Player;
+
 use terpz710\kdrpe\api\KDR;
 
 use terpz710\kdrpe\database\Database;
 
 use terpz710\kdrpe\floatingtext\FloatingText;
 
+use terpz710\kdrpe\leaderboard\Leaderboard;
+use terpz710\kdrpe\leaderboard\LeaderboardType;
+
 class EventListener implements Listener {
     
     public function onUserLogin(PlayerLoginEvent $event) : void{
         $player = $event->getPlayer();
+        $config = Core::getInstance()->getConfig();
         $database = Database::getInstance();
         
         if ($database->isNew($player)) {

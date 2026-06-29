@@ -10,6 +10,8 @@ use terpz710\kdrpe\api\KDR;
 
 use terpz710\kdrpe\utils\Message;
 
+use terpz710\kdrpe\floatingtext\FloatingText;
+
 class Leaderboard {
     
     private string $type;

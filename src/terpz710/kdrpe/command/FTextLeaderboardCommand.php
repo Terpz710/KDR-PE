@@ -33,7 +33,6 @@ class FTextLeaderboardCommand extends KDRCommand {
 
         if (!isset($args[0])) {
             throw new InvalidCommandSyntaxException();
-            return;
         }
 
         if (!LeaderboardType::validateType($args[0])) {
