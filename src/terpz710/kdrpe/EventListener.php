@@ -102,6 +102,7 @@ class EventListener implements Listener {
 
     public function onEntityTeleport(EntityTeleportEvent $event) : void{
         $entity = $event->getEntity();
+        $config = Core::getInstance()->getConfig();
         
         if ($entity instanceof Player) {
             $fromWorld = $event->getFrom()->getWorld();
