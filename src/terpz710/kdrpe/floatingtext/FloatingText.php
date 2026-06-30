@@ -13,6 +13,8 @@ use pocketmine\utils\Config;
 
 use terpz710\kdrpe\Core;
 
+use terpz710\kdrpe\leaderboard\Leaderboard;
+
 class FloatingText {
     
     public static array $floatingText = [];
@@ -140,9 +142,9 @@ class FloatingText {
         }
         
         $tags = [
-            "kill_leaderboard",
-            "death_leaderboard",
-            "killstreak_leaderboard"
+            Leaderboard::FTEXT_ID_KILL,
+            Leaderboard::FTEXT_ID_KILLSTREAK,
+            Leaderboard::FTEXT_ID_DEATH
         ];
         
         foreach ($tags as $tag) {
