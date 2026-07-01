@@ -12,22 +12,21 @@ This plugin also creates a floating text leaderboards that shows off the top kil
 
 This rewrite fixes 99.99% of the bugs from v1.0.6 rewrite...
 
+KEEP IN MIND: Floatingtext leaderboards is still WiP, Please report any issues to [bug reports](https://github.com/Terpz710/KDR-PE/issues) or submit a pull request [here](https://github.com/Terpz710/KDR-PE/pulls) helping this issue, thanks. - AlexB (Terpz710)
+
 # Features 
 
-* Kill tracker
-* Death tracker
-* Killstreak system
-* KDR system
-* Topkill system
-* TopDeath system
-* TopKillStreak system
+* Kill, killstreak and death tracker
+* Calculates the KDR
+* Customizable messages
+* Top kill, killstreak and death system
 * See other players kills, deaths, killstreak and KDRS
 * CREATE A TOP KILL/DEATH/KILLSTREAK LEADERBOARD (Floating Text)!
 
 # Permissions/Commands
 **/kdr command**
 ```php
-comandLabel: kdr
+commandLabel: kdr
 commandDescription: Checkout your current KDR stats
 commandUsage: /kdr
 commandAliases: none

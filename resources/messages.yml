@@ -1,33 +1,63 @@
+# DO NOT MODIFY THIS!!
+message-version: 1
+
+# You may use '&' to color your messages!
+# e.g. "&4This message is red!"
+
+# Available tags:
+# {player} => playerName
+# {type} => leaderboardType
+# {line} => \n
+# {position} => playerPositionInLeaderboard
+# {kills} => playerKills
+# {killstreak} => playerKillstreak
+# {deaths} => playerDeaths
+
+# NOTE: NOT ALL MESSAGES CAN USE THE TAGS
+
+# Message when a user tries to run the command outside the server
 use-command=ingame: "Run this command in-game"
-player-not-found: "Player doesn't exist!"
+
+# Message when a player tries to lookup a non-existant player
+player-not-found: "Player '{player}' doesn't exist!"
+
+# Message when someone inputs the wrong leaderboard type
 invalid-type: "Type '{type}' is invalid!"
 
+# Messages displaying your KDR stats
 stats-title: "-= {player} stats =-"
 stats-body-kills: "Kills: {kills}"
 stats-body-killstreak: "Killstreak: {killstreak}"
 stats-body-deaths: "Deaths: {deaths}"
 stats-body-kdr: "KDR: {kdr}"
 
+# Messages displaying someone else's KDR stats
 stats-title-other: "-= {player} stats =-"
 stats-body-kills-other: "Kills: {kills}"
 stats-body-killstreak-other: "Killstreak: {killstreak}"
 stats-body-deaths-other: "Deaths: {deaths}"
 stats-body-kdr-other: "KDR: {kdr}"
 
+# Messages displaying the kill leaderboard in chat
 leaderboard-kill-title: "-= Top 10 Killers =-"
 leaderboard-kill-body: "{position}. {player} - {kills} kills"
 
+# Messages displaying the kill leaderboard as a floating text
 ftext-leaderboard-kill-title: "-= Top 10 Killers =-{line}"
 ftext-leaderboard-kill-body: "{position}. {player} - {kills} kills{line}"
 
+# Messages displaying the killstreak leaderboard in chat
 leaderboard-killstreak-title: "-= Top 10 Killstreaks =-"
 leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak"
 
+# Messages displaying the killstreak leaderboard as a floating text
 ftext-leaderboard-killstreak-title: "-= Top 10 Killstreaks =-{line}"
 ftext-leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak{line}"
 
+# Messages displaying the death leaderboard in chat
 leaderboard-death-title: "-= Top 10 Deaths =-"
 leaderboard-death-body: "{position}. {player} - {deaths} deaths"
 
+# Messages displaying the death leaderboard as a floating text
 ftext-leaderboard-death-title: "-= Top 10 Deaths =-{line}"
 ftext-leaderboard-death-body: "{position}. {player} - {deaths} deaths{line}"

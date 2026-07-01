@@ -1,1 +1,6 @@
+# DO NOT MODIFY THIS!!
+config-version: 1
+
+# If 'false' then operators cannot spawn in floatingtext leaderboards
+# If 'true' then operators may spawn them in using /ftleaderboard
 enable-floatingtext: false

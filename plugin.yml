@@ -3,6 +3,9 @@ version: 1.0.6
 author: Terpz710
 api: 5.44.2
 main: terpz710\kdrpe\Core
+virions:
+  - UpdateNotifier
+  - ConfigUpdater
 
 permissions:
   kdrpe.stats:

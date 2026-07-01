@@ -37,7 +37,7 @@ class OtherStatsCommand extends KDRCommand {
         }
 
         if (Database::getInstance()->isNew($args[0])) {
-            $sender->sendMessage((string) new Message("player-not-found"));
+            $sender->sendMessage((string) new Message("player-not-found", "{player}", $args[0]));
             return;
         }
         

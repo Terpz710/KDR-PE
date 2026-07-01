@@ -15,6 +15,8 @@ use terpz710\kdrpe\command\FTextLeaderboardCommand;
 
 use terpz710\kdrpe\database\Database;
 
+use terpz710\kdrpe\utils\Utils;
+
 class Core extends PluginBase {
     
     protected static self $instance;
@@ -32,6 +34,9 @@ class Core extends PluginBase {
         $this->saveResource("messages.yml");
         
         $this->messages = new config($this->getDatafolder() . "messages.yml");
+
+        Utils::checkConfigVersions();
+        Utils::checkPluginUpdate();
         
         $server->getPluginManager()->registerEvents(new EventListener(), $this);
         

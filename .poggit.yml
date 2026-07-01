@@ -6,4 +6,9 @@ projects:
   KDR-PE:
     path: ""
     lint: true
+    libs:
+      - src: ifera-mc/UpdateNotifier/UpdateNotifier
+        version: ^3.0.0
+      - src: ifera-mc/ConfigUpdater/ConfigUpdater
+        version: ^2.0.0
 ...
