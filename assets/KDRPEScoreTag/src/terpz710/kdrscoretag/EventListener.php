@@ -9,6 +9,8 @@ use pocketmine\event\player\PlayerJoinEvent;
 
 use pocketmine\Server;
 
+use terpz710\kdrpe\api\KDR;
+
 use terpz710\kdrpe\event\AddKillEvent;
 use terpz710\kdrpe\event\AddKillstreakEvent;
 use terpz710\kdrpe\event\ResetKillstreakEvent;

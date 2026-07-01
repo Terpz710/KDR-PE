@@ -7,6 +7,8 @@ namespace terpz710\kdrscoretag;
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginException;
 
+use pocketmine\scheduler\ClosureTask;
+
 class Core extends PluginBase {
 
     protected function onEnable() : void{
@@ -20,7 +22,7 @@ class Core extends PluginBase {
         }
 
         if ($scorehud === null || !$scorehud->isEnabled()) {
-            throw new PluginException("Plugin 'KDR-PE' is not installed, Please download the latest phar from https://poggit.pmmp.io/p/ScoreHud");
+            throw new PluginException("Plugin 'ScoreHud' is not installed, Please download the latest phar from https://poggit.pmmp.io/p/ScoreHud");
         }
 
         $manager->registerEvents(new EventListener(), $this);

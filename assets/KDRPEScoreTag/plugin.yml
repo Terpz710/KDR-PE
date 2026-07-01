@@ -3,3 +3,6 @@ version: 1.0.0
 author: Terpz710
 api: 5.44.2
 main: terpz710\kdrscoretag\Core
+depend:
+  - KDR-PE
+  - ScoreHud
