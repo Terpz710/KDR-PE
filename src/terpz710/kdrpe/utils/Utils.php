@@ -28,6 +28,6 @@ class Utils {
     public static function checkPluginUpdate() : void{
         $core = Core::getInstance();
         
-        UpdateNotifier::checkUpdate($core->getName(), $core->getVersion());
+        UpdateNotifier::checkUpdate($core->getDescription()->getName(), $core->getDescription()->getVersion());
     }
 }
