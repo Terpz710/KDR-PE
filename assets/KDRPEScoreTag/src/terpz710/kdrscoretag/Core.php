@@ -7,8 +7,6 @@ namespace terpz710\kdrscoretag;
 use pocketmine\plugin\PluginBase;
 use pocketmine\plugin\PluginException;
 
-use pocketmine\scheduler\ClosureTask;
-
 class Core extends PluginBase {
 
     protected function onEnable() : void{
