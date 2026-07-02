@@ -17,6 +17,8 @@ use terpz710\kdrpe\database\Database;
 
 use terpz710\kdrpe\utils\Utils;
 
+use CortexPE\Commando\PacketHooker;
+
 class Core extends PluginBase {
     
     protected static self $instance;
@@ -39,12 +41,16 @@ class Core extends PluginBase {
         Utils::checkPluginUpdate();
         
         $server->getPluginManager()->registerEvents(new EventListener(), $this);
+
+        if (!PacketHooker::isRegistered()) {
+            PacketHooker::register($this);
+        }
         
         $server->getCommandMap()->registerAll("KDR-PE", [
-            new StatsCommand($this),
-            new OtherStatsCommand($this),
-            new LeaderboardCommand($this),
-            new FTextLeaderboardCommand($this)
+            new StatsCommand($this, "kdr", "Checkout your current KDR stats"),
+            new OtherStatsCommand($this, "seekdr", "Checkout someone else's current KDR stats"),
+            new LeaderboardCommand($this, "leaderboard", "Fetches the leaderboard for kill, death and killstreak", ["lb"]),
+            new FTextLeaderboardCommand($this, "ftleaderboard", "Spawns in a floating text displaying different leaderboards", ["ftlb"])
         ]);
     }
     

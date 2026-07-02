@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace terpz710\kdrpe\command;
 
 use pocketmine\command\CommandSender;
-use pocketmine\command\utils\InvalidCommandSyntaxException;
 
 use pocketmine\player\Player;
 
@@ -17,30 +16,27 @@ use terpz710\kdrpe\api\KDR;
 
 use terpz710\kdrpe\utils\Message;
 
-class OtherStatsCommand extends KDRCommand {
+use CortexPE\Commando\BaseCommand;
+use CortexPE\Commando\args\TargetPlayerArgument;
+
+class OtherStatsCommand extends BaseCommand {
     
-    public function __construct(protected Core $plugin) {
-        parent::__construct("seekdr", $this->plugin);
-        $this->setDescription("Checkout someone else's current KDR stats");
-        $this->setUsage("/seekdr <name>");
+    protected function prepare() : void{
+        $this->registerArgument(0, new TargetPlayerArgument("player"));
         $this->setPermission("kdrpe.otherstats");
     }
     
-    public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void{
         if (!$sender instanceof Player) {
             $sender->sendMessage((string) new Message("use-command-ingame"));
             return;
         }
-        
-        if (!isset($args[0])) {
-            throw new InvalidCommandSyntaxException();
-        }
 
-        if (Database::getInstance()->isNew($args[0])) {
-            $sender->sendMessage((string) new Message("player-not-found", "{player}", $args[0]));
+        if (Database::getInstance()->isNew($args["player"])) {
+            $sender->sendMessage((string) new Message("player-not-found", "{player}", $args["player"]));
             return;
         }
         
-        KDR::getInstance()->fetchStats($sender, true, $args[0]);
+        KDR::getInstance()->fetchStats($sender, true, $args["player"]);
     }
 }

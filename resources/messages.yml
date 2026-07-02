@@ -16,7 +16,7 @@ message-version: 1
 # NOTE: NOT ALL MESSAGES CAN USE THE TAGS
 
 # Message when a user tries to run the command outside the server
-use-command=ingame: "Run this command in-game"
+use-command-ingame: "Run this command in-game"
 
 # Message when a player tries to lookup a non-existant player
 player-not-found: "Player '{player}' doesn't exist!"
@@ -43,6 +43,9 @@ leaderboard-kill-title: "-= Top 10 Killers =-"
 leaderboard-kill-body: "{position}. {player} - {kills} kills"
 
 # Messages displaying the kill leaderboard as a floating text
+# VERY IMPORTANT THAT YOU DO NOT REMOVE {line}
+# {line} will break the plugin if not handled correctly
+# keep {line} at the end of the message, thanks.
 ftext-leaderboard-kill-title: "-= Top 10 Killers =-{line}"
 ftext-leaderboard-kill-body: "{position}. {player} - {kills} kills{line}"
 
@@ -51,6 +54,9 @@ leaderboard-killstreak-title: "-= Top 10 Killstreaks =-"
 leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak"
 
 # Messages displaying the killstreak leaderboard as a floating text
+# VERY IMPORTANT THAT YOU DO NOT REMOVE {line}
+# {line} will break the plugin if not handled correctly
+# keep {line} at the end of the message, thanks.
 ftext-leaderboard-killstreak-title: "-= Top 10 Killstreaks =-{line}"
 ftext-leaderboard-killstreak-body: "{position}. {player} - {killstreak} killstreak{line}"
 
@@ -59,5 +65,8 @@ leaderboard-death-title: "-= Top 10 Deaths =-"
 leaderboard-death-body: "{position}. {player} - {deaths} deaths"
 
 # Messages displaying the death leaderboard as a floating text
+# VERY IMPORTANT THAT YOU DO NOT REMOVE {line}
+# {line} will break the plugin if not handled correctly
+# keep {line} at the end of the message, thanks.
 ftext-leaderboard-death-title: "-= Top 10 Deaths =-{line}"
 ftext-leaderboard-death-body: "{position}. {player} - {deaths} deaths{line}"
