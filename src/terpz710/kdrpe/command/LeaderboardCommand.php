@@ -8,8 +8,6 @@ use pocketmine\command\CommandSender;
 
 use pocketmine\player\Player;
 
-use terpz710\kdrpe\Core;
-
 use terpz710\kdrpe\utils\Message;
 
 use terpz710\kdrpe\leaderboard\Leaderboard;

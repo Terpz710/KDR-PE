@@ -23,7 +23,7 @@ KEEP IN MIND: Floatingtext leaderboards is still WiP, Please report any issues t
 * See other players kills, deaths, killstreak and KDRS
 * CREATE A TOP KILL/DEATH/KILLSTREAK LEADERBOARD (Floating Text)!
 
-# Permissions/Commands
+# Commands/Permissions
 **/kdr command**
 ```php
 commandLabel: kdr
@@ -51,8 +51,21 @@ commandPermission: kdrpe.otherstats
 commandLabel: leaderboard
 commandDescription: Fetches the leaderboard for kill, death and killstreak
 commandUsage: /leaderboard <type: string>
-commandAliases: none
+availableTypes: kill, killstreak and death
+commandAliases: lb
 commandPermission: kdrpe.leaderboard
+
+// This command can be ran by everyone not just operators
+```
+
+**/ftleaderboard command**
+```php
+commandLabel: ftleaderboard
+commandDescription: Spawns in a floating text displaying different leaderboards
+commandUsage: /leaderboard <type: string>
+availableTypes: kill, killstreak and death
+commandAliases: ftlb
+commandPermission: kdrpe.ftext.leaderboard
 
 // This command can ONLY be ran by just operators!
 ```

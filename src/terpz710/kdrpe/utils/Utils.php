@@ -22,7 +22,7 @@ class Utils {
         $configVersion = $core->getConfig()->get("config-version");
         
         ConfigUpdater::checkUpdate($core, $core->getConfig(), "config-version", self::CONFIG_VERSION);
-        ConfigUpdater::checkUpdate($core, $core->messages, "message-version", self::MESSAGE_VERSION);
+        ConfigUpdater::checkUpdate($core, $core->messages, "messages-version", self::MESSAGE_VERSION);
     }
 
     public static function checkPluginUpdate() : void{

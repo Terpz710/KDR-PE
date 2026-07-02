@@ -8,8 +8,6 @@ use pocketmine\command\CommandSender;
 
 use pocketmine\player\Player;
 
-use terpz710\kdrpe\Core;
-
 use terpz710\kdrpe\database\Database;
 
 use terpz710\kdrpe\api\KDR;
