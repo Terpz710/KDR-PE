@@ -8,6 +8,8 @@ use pocketmine\player\Player;
 
 use pocketmine\utils\SingletonTrait;
 
+use terpz710\kdrpe\Core;
+
 use terpz710\kdrpe\database\Database;
 
 use terpz710\kdrpe\utils\Message;
@@ -291,5 +293,5 @@ final class KDR {
         } finally {
             $stmt->close();
         }
-    }
+    }  
 }
